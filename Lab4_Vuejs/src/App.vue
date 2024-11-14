@@ -1,9 +1,9 @@
 <script setup>
-import Bai4 from './components/Bai4.vue'
+import Demo1 from './components/Demo1.vue'
 </script>
 
 <template>
-  <Bai4></Bai4>
+  <Demo1></Demo1>
   <div>
     <a href="https://vite.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <H1>Trần Đức Hiền</H1>
+        <H1>Hello Class</H1>
     </div>
 </template>
 
