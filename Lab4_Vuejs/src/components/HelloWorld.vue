@@ -1,9 +1,11 @@
 <template>
-    <div>
-        <H1>Hello Class</H1>
-    </div>
+    Hello
 </template>
 
-<script setup></script>
+<script>
+    
+</script>
 
-<style scoped></style>
+<style>
+
+</style>

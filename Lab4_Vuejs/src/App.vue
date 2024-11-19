@@ -1,9 +1,9 @@
 <script setup>
-import Demo1 from './components/Demo1.vue'
+import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <Demo1></Demo1>
+  <HelloWorld></HelloWorld>
   <div>
     <a href="https://vite.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
