@@ -1,47 +1,31 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import bai1 from './components/bai1.vue'
+import bai2 from './components/bai2.vue'
+import bai3 from './components/bai3.vue'
+
+import { ref } from 'vue'
+import CreatePost from './components/CreatePost.vue'
+import PostList from './components/PostList.vue'
+
+const posts = ref([])
+
+function addPost(post) {
+posts.value.push(post)
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    <div id="app">
+        <h1>Ứng dụng Blog với VueJS</h1>
+        <br>
+        <CreatePost @add-post="addPost"></CreatePost>
+        <br>
+        <PostList :posts="posts"></PostList>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
+<style>
+    h1 {
+        text-align: center;
+    }
 </style>

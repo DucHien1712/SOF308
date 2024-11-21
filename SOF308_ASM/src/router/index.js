@@ -28,6 +28,11 @@ const routes = [
     name: 'PostPage',
     component: () => import('../components/PostPage.vue'), 
   },
+  {
+    path: '/user',  
+    name: 'UserPage',
+    component: () => import('../components/UserPage.vue'), 
+  },
 ];
 
 const router = createRouter({

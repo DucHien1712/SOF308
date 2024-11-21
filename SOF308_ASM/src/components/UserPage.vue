@@ -72,41 +72,10 @@
     </nav>
 
 
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <div id="carouselExampleIndicators" class="carousel slide">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                            class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                            aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                            aria-label="Slide 3"></button>
-                    </div>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="images/banner1.jpg" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="images/banner2.jpg" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="images/banner3.jpg" class="d-block w-100" alt="...">
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </div>
+    <div class="carousel-container">
+        <h1 class="text-center mb-4">Trending Post</h1>
+        <div class="carousel" ref="carousel">
+            <div class="carousel-item" v-for="n in 9" :key="n">{{ n }}</div>
         </div>
     </div>
 
@@ -115,7 +84,7 @@
             <div class="col-md-4">
                 <h2 class="section-title">Về tôi</h2>
                 <div class="card mb-3">
-                    <img src="images/hien.jpg" class="card-img-top" alt="">
+                    <img src="/src/assets/images/Bee Blog.png" class="card-img-top" alt="">
                     <div class="card-body">
                         <h5 class="card-title">Giới thiệu bản thân</h5>
                         <p class="card-text">Trần Đức Hiền <br>
@@ -133,7 +102,7 @@
                             <div class="card mb-3">
                                 <h5 class="card-title">Phương pháp tập Pilates giúp phục hồi chấn thương cột sống<span
                                         class="ms-2"><i class="fas fa-comment"></i> 16</span></h5>
-                                <img src="images/tap-piltes.jpg" class="card-img-top" alt="Pilates">
+                                <img src="/src/assets/images/Bee Blog.png" class="card-img-top" alt="Pilates">
                                 <div class="card-body">
                                     <p class="card-text">
                                         Ngoài việc giúp duy trì vóc dáng, cải thiện sự linh hoạt, dẻo dai cho người tập.
@@ -146,7 +115,7 @@
                         <div class="col-md-5">
                             <div class="other-news">
                                 <div class="card d-flex flex-row mb-3">
-                                    <img src="images/corevalue.jpg" alt="News 1" class="img-fluid"
+                                    <img src="/src/assets/images/Bee Blog.png" alt="News 1" class="img-fluid"
                                         style="width: 90px; height: 95px; object-fit: cover;">
                                     <div class="card-body p-2">
                                         <p class="card-text mb-1">Biết ơn đời, đời sẽ <br> thương ta</p>
@@ -155,7 +124,7 @@
                                 </div>
 
                                 <div class="card d-flex flex-row mb-3">
-                                    <img src="images/orange_300x300.jpg" alt="News 2" class="img-fluid"
+                                    <img src="/src/assets/images/Bee Blog.png" alt="News 2" class="img-fluid"
                                         style="width: 90px; height: 95px; object-fit: cover;">
                                     <div class="card-body p-2">
                                         <p class="card-text mb-1">9 tác dụng tuyệt vời <br> của cam</p>
@@ -164,7 +133,7 @@
                                 </div>
 
                                 <div class="card d-flex flex-row mb-3">
-                                    <img src="images/sesameoil_300x300.jpg" alt="News 3" class="img-fluid"
+                                    <img src="/src/assets/images/Bee Blog.png" alt="News 3" class="img-fluid"
                                         style="width: 90px; height: 95px; object-fit: cover;">
                                     <div class="card-body p-2">
                                         <p class="card-text mb-1">10 công dụng bất ngờ <br> từ dầu dừa</p>
@@ -173,7 +142,7 @@
                                 </div>
 
                                 <div class="card d-flex flex-row mb-3">
-                                    <img src="images/spinach_300x300.jpg" alt="News 2" class="img-fluid"
+                                    <img src="/src/assets/images/Bee Blog.png" alt="News 2" class="img-fluid"
                                         style="width: 90px; height: 95px; object-fit: cover;">
                                     <div class="card-body p-2">
                                         <p class="card-text mb-1">Lợi ích khi ăn rau mỗi <br> ngày</p>
@@ -210,7 +179,7 @@
                     <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
                         aria-labelledby="pills-home-tab" tabindex="0">
                         <div class="card d-flex flex-row mb-3">
-                            <img src="images/corevalue.jpg" alt="News 1" class="img-fluid"
+                            <img src="/src/assets/images/Bee Blog.png" alt="News 1" class="img-fluid"
                                 style="width: 90px; height: 95px; object-fit: cover;">
                             <div class="card-body p-2">
                                 <p class="card-text mb-1">Biết ơn đời, đời sẽ <br> thương ta</p>
@@ -219,7 +188,7 @@
                         </div>
 
                         <div class="card d-flex flex-row mb-3">
-                            <img src="images/sesameoil_300x300.jpg" alt="News 3" class="img-fluid"
+                            <img src="/src/assets/images/Bee Blog.png" alt="News 3" class="img-fluid"
                                 style="width: 90px; height: 95px; object-fit: cover;">
                             <div class="card-body p-2">
                                 <p class="card-text mb-1">10 công dụng bất ngờ <br> từ dầu dừa</p>
@@ -228,7 +197,7 @@
                         </div>
 
                         <div class="card d-flex flex-row mb-3">
-                            <img src="images/spinach_300x300.jpg" alt="News 2" class="img-fluid"
+                            <img src="/src/assets/images/Bee Blog.png" alt="News 2" class="img-fluid"
                                 style="width: 90px; height: 95px; object-fit: cover;">
                             <div class="card-body p-2">
                                 <p class="card-text mb-1">Lợi ích khi ăn rau mỗi <br> ngày</p>
@@ -248,7 +217,7 @@
                 <div class="row row-cols-1 row-cols-md-2 g-4">
                     <div class="col">
                         <div class="card">
-                            <img src="images/video1.jpg" class="card-img-top" alt="...">
+                            <img src="/src/assets/images/Bee Blog.png" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">Đi xa hơn để trưởng thành hơn</h5>
                                 <p class="card-text">Tuổi trẻ chỉ nghĩ đến những chuyến đi, đợi <br> mong một ngày
@@ -260,7 +229,7 @@
                     </div>
                     <div class="col">
                         <div class="card">
-                            <img src="images/video2.jpg" class="card-img-top" alt="...">
+                            <img src="/src/assets/images/Bee Blog.png" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">Chút tâm tư những ngày cuối năm</h5>
                                 <p class="card-text">Guồng quay cuộc sống dẫu có vội vàng, dẫu <br> có tấp nập đến đâu
@@ -271,7 +240,7 @@
                     </div>
                     <div class="col">
                         <div class="card">
-                            <img src="images/video3.jpg" class="card-img-top" alt="...">
+                            <img src="/src/assets/images/Bee Blog.png" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">Ước gì được trở về tuổi thơ</h5>
                                 <p class="card-text">Tuổi trẻ chỉ nghĩ đến những chuyến đi, đợi <br> mong một ngày
@@ -282,7 +251,7 @@
                     </div>
                     <div class="col">
                         <div class="card">
-                            <img src="images/video4.jpg" class="card-img-top" alt="...">
+                            <img src="/src/assets/images/Bee Blog.png" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">Ba người thầy vĩ đại</h5>
                                 <p class="card-text">Ta xem vạn vật là thầy. Tinh thần học hỏi của <br> ta luôn rộng
@@ -699,3 +668,34 @@
             margin-left: 300px;
         }
     </style>
+
+<script>
+
+export default {
+name: "CarouselComponent",
+mounted() {
+  $(this.$refs.carousel).slick({
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    infinite: true,
+    arrows: true,
+    prevArrow: '<button type="button" class="slick-prev"><i class="fa-solid fa-chevron-left"></i></button>',
+    nextArrow: '<button type="button" class="slick-next"><i class="fa-solid fa-chevron-right"></i></button>',
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 576,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  });
+},
+};
+</script>

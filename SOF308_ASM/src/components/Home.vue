@@ -23,7 +23,7 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/blog" class="nav-link">
+                        <router-link to="/user" class="nav-link">
                             <i class="fa-solid fa-blog" id="icons"></i>Blog
                         </router-link>
                     </li>

@@ -1,9 +1,9 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import Bai3 from './components/Bai3.vue'
 </script>
 
 <template>
-  <HelloWorld></HelloWorld>
+  <Bai3></Bai3>
   <div>
     <a href="https://vite.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
