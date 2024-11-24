@@ -46,11 +46,11 @@
                                 <i class="fa-solid fa-user" id="icons"></i>Login
                             </router-link>
                             <li><router-link to="/forgot-password" class="dropdown-item">
-                                <i class="fa-solid fa-lock" id="icons"></i>Forgot Password
-                            </router-link></li>
+                                    <i class="fa-solid fa-lock" id="icons"></i>Forgot Password
+                                </router-link></li>
                             <li><router-link to="/edit-profile" class="dropdown-item">
-                                <i class="fa-regular fa-id-card" id="icons"></i>Edit Profile
-                            </router-link></li>
+                                    <i class="fa-regular fa-id-card" id="icons"></i>Edit Profile
+                                </router-link></li>
                         </ul>
                     </li>
                 </ul>
@@ -72,26 +72,30 @@
             <h2 class="text-center mb-4">Chỉnh Sửa Thông Tin Cá Nhân</h2>
             <!-- Profile Picture Section -->
             <div class="text-center mb-4">
-                <img src="https://via.placeholder.com/150" alt="Avatar" class="profile-pic" id="profilePic">
+                <img :src="profilePic" alt="Avatar" class="profile-pic" id="profilePic"
+                    style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">
                 <div class="change-pic-btn">
                     <label for="uploadPic" class="btn btn-outline-primary btn-sm">Thay Đổi Ảnh</label>
-                    <input type="file" id="uploadPic" class="d-none" accept="image/*">
+                    <input type="file" id="uploadPic" class="d-none" accept="image/*" @change="onImageChange">
                 </div>
             </div>
 
             <!-- Form Section -->
-            <form>
+            <form @submit.prevent="saveChanges">
                 <div class="mb-3">
                     <label for="fullName" class="form-label">Họ và Tên</label>
-                    <input type="text" class="form-control" id="fullName" placeholder="Nhập họ và tên">
+                    <input type="text" class="form-control" id="fullName" v-model="formData.fullName"
+                        placeholder="Nhập họ và tên">
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="Nhập email">
+                    <input type="email" class="form-control" id="email" v-model="formData.email"
+                        placeholder="Nhập email">
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Mật khẩu</label>
-                    <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu">
+                    <input type="password" class="form-control" id="password" v-model="formData.password"
+                        placeholder="Nhập mật khẩu">
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
@@ -148,395 +152,426 @@
 </template>
 
 <script>
-
+export default {
+    name: 'EditProfile',
+    data() {
+        return {
+            profilePic: 'https://via.placeholder.com/150', // Default profile picture
+            formData: {
+                fullName: '', // User's full name
+                email: '',    // User's email
+                password: ''  // User's password
+            }
+        };
+    },
+    methods: {
+        // Function to handle profile picture change
+        onImageChange(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.profilePic = e.target.result; // Update the profile picture preview
+                };
+                reader.readAsDataURL(file);
+            }
+        },
+        // Function to save changes (mock example)
+        saveChanges() {
+            // For now, just log the form data
+            console.log('Updated Profile Data:', this.formData);
+            alert('Thông tin đã được lưu thành công!');
+        }
+    }
+};
 </script>
 
 <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Arial', sans-serif;
-        }
-
-        .profile-container {
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .profile-container h2 {
-            color: #455159;
-        }
-
-        .profile-pic {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #007bff;
-        }
-
-        .change-pic-btn {
-            margin-top: 10px;
-        }
-
-        .form-control {
-            border-radius: 8px;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-
-        body,
-        html {
-            height: 100%;
-            background-color: #F6F6F6;
-            padding: 0px;
-            margin: 0px;
-            font-family: 'Lora', sans-serif;
-        }
-
-        /* CCS Menubar */
-        .navbar-brand img {
-            width: 120px;
-            height: 120px;
-        }
-
-        .navbar-nav .nav-item {
-            margin-right: 40px;
-        }
-
-        #icons {
-            margin-right: 10px;
-        }
-
-        .nav-link {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: #333;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .nav-link:hover {
-            color: #007bff;
-            text-decoration: underline;
-        }
-
-        .navbar-nav:last-child .nav-item {
-            margin-left: 10px;
-        }
-
-        .dropdown-menu .dropdown-item {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: #333;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .dropdown-menu .dropdown-item:hover {
-            color: #007bff;
-        }
-
-        .navbar-brand img {
-            width: 120px;
-            height: 120px;
-        }
-
-        .navbar-nav .nav-item {
-            margin-right: 40px;
-        }
-
-        #icons {
-            margin-right: 10px;
-        }
-
-        .nav-link {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: #333;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .nav-link:hover {
-            color: #007bff;
-            text-decoration: underline;
-        }
-
-
-        /* CSS Content */
-        .content {
-            width: 90%;
-            margin: 30px auto 30px;
-        }
-
-        .content .main-content {
-            width: 70%;
-            float: left;
-        }
-
-        .clearfix::after {
-            content: '';
-            display: block;
-            clear: both;
-        }
-
-        .content .main-content .post {
-            width: 95%;
-            height: 270px;
-            margin: 20px auto;
-            border-radius: 5px;
-            background-color: white;
-            position: relative;
-        }
-
-        .content .main-content .post .read-more {
-            float: right;
-            border: 1px solid #006669;
-            background: transparent;
-            border-radius: 0;
-            color: #006669 !important;
-            position: relative;
-            bottom: 10px;
-            right: 10px;
-            margin: 10px;
-        }
-
-        .content .main-content .post .read-more:hover {
-            background: #006669;
-            color: white !important;
-            transition: .25s;
-        }
-
-        .content .main-content .post .post-images {
-            width: 40%;
-            height: 100%;
-            float: left;
-        }
-
-        .content .main-content .recent-post-title {
-            margin: 20px;
-        }
-
-        .content .main-content .post .post-preview {
-            width: 60%;
-            padding: 10px;
-            float: right;
-        }
-
-        .btn {
-            padding: .5rem 1rem;
-            background: #006669;
-            color: white;
-            border: 1px solid transparent;
-            border-radius: .25rem;
-        }
-
-        .btn:hover {
-            color: white !important;
-            background: #006669;
-        }
-
-        .content .main-content .post .post-preview h2 a {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #455159;
-            text-decoration: none;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .content .main-content .post .post-preview i {
-            font-size: 1.0rem;
-            color: #007bff;
-            margin: 2px;
-        }
-
-        .content .main-content .post .post-preview span {
-            font-size: 1.2rem;
-            font-weight: normal;
-            color: #333;
-            font-family: 'Montserrat', sans-serif;
-            margin-left: 4px;
-        }
-
-
-        .content .main-content .post .post-preview h2 a:hover {
-            color: #006669;
-            text-decoration: none;
-        }
-
-        /* CSS Sidebar */
-
-        .content .sidebar {
-            width: 30%;
-            float: left;
-            height: 300px;
-        }
-
-        .content .sidebar .section {
-            background: white;
-            padding: 20px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            color: #455159;
-        }
-
-        .content .sidebar .section .section-title {
-            margin: 10px 0px 10px 0px;
-        }
-
-        .content .sidebar .section.search {
-            margin-top: 88px;
-        }
-
-        .content .sidebar .section.topics ul {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-
-        .content .sidebar .section.topics ul li a {
-            display: block;
-            padding: 15px 0px 15px 0px;
-            border-bottom: 1px solid #e0e0e0;
-            transition: all 0.3s;
-            text-decoration: none;
-            color: #455159;
-            font-weight: 500;
-        }
-
-
-        .content .sidebar .section.topics ul li a:hover {
-            padding-left: 20px;
-            transition: all 0.3s;
-        }
-
-        .text-input {
-            padding: .7rem 1rem;
-            display: block;
-            width: 100%;
-            border-radius: 5px;
-            border: 1px solid #e0e0e0;
-            outline: none;
-            color: #444;
-            line-height: 1.5rem;
-            font-size: 1.2rem;
-            font-family: 'Lora', sans-serif;
-        }
-
-        /* CSS Footer */
-        .footer {
-            position: relative;
-            background: #303036;
-            color: #d3d3d3;
-            height: 400px;
-            padding: 20px;
-        }
-
-        .footer .footer-content {
-            height: 350px;
-            display: flex;
-        }
-
-        .footer .footer-content .footer-section {
-            flex: 1;
-            padding: 25px;
-        }
-
-        .footer .footer-content h1,
-        .footer .footer-content h2 {
-            color: white;
-        }
-
-        .footer .footer-content .about h1 span {
-            color: #05f7ff;
-        }
-
-        .footer .footer-content .about .contact span {
-            display: block;
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-        }
-
-        .footer .footer-content .about .socials a {
-            border: 1px solid gray;
-            width: 45px;
-            height: 41px;
-            padding-top: 5px;
-            margin-right: 5px;
-            text-align: center;
-            display: inline-block;
-            font-size: 1.3rem;
-            border-radius: 5px;
-        }
-
-        .footer .footer-content .about .socials a i {
-            color: white;
-        }
-
-        .footer .footer-content .about .socials a:hover {
-            border: 1px solid white;
-            color: white;
-            transition: all .3s;
-        }
-
-        .footer .footer-content .links ul a {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-        }
-
-        .footer .footer-content .links ul li a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .footer .footer-content .links ul a:hover {
-            color: white;
-            margin-left: 15px;
-            transition: all .3s;
-        }
-
-        .footer .footer-content .contact-form .contact-input {
-            background: #272727;
-            color: #bebdbd;
-            margin-bottom: 10px;
-            line-height: 1.5rem;
-            padding: .9rem 1.4rem;
-            border: none;
-        }
-
-        .footer .footer-content .contact-form .contact-input:focus {
-            background: #1a1a1a;
-        }
-
-        .footer .footer-content .contact-form .contact-btn {
-            float: right;
-        }
-
-        .btn-big {
-            padding: .7rem 1.3rem;
-            line-height: 1.3rem;
-        }
-
-        .footer .footer-bottom {
-            background: #343a40;
-            color: #686868;
-            width: 100%;
-            height: 50px;
-            text-align: center;
-            position: absolute;
-            bottom: 0px;
-            left: 0px;
-            padding-top: 20px;
-        }
-
-        #list {
-            margin-left: 300px;
-        }
-    </style>
+body {
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+}
+
+.profile-container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-container h2 {
+    color: #455159;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #007bff;
+}
+
+.change-pic-btn {
+    margin-top: 10px;
+}
+
+.form-control {
+    border-radius: 8px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+body,
+html {
+    height: 100%;
+    background-color: #F6F6F6;
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Lora', sans-serif;
+}
+
+/* CCS Menubar */
+.navbar-brand img {
+    width: 120px;
+    height: 120px;
+}
+
+.navbar-nav .nav-item {
+    margin-right: 40px;
+}
+
+#icons {
+    margin-right: 10px;
+}
+
+.nav-link {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.nav-link:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.navbar-nav:last-child .nav-item {
+    margin-left: 10px;
+}
+
+.dropdown-menu .dropdown-item {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.dropdown-menu .dropdown-item:hover {
+    color: #007bff;
+}
+
+.navbar-brand img {
+    width: 120px;
+    height: 120px;
+}
+
+.navbar-nav .nav-item {
+    margin-right: 40px;
+}
+
+#icons {
+    margin-right: 10px;
+}
+
+.nav-link {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.nav-link:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+
+/* CSS Content */
+.content {
+    width: 90%;
+    margin: 30px auto 30px;
+}
+
+.content .main-content {
+    width: 70%;
+    float: left;
+}
+
+.clearfix::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.content .main-content .post {
+    width: 95%;
+    height: 270px;
+    margin: 20px auto;
+    border-radius: 5px;
+    background-color: white;
+    position: relative;
+}
+
+.content .main-content .post .read-more {
+    float: right;
+    border: 1px solid #006669;
+    background: transparent;
+    border-radius: 0;
+    color: #006669 !important;
+    position: relative;
+    bottom: 10px;
+    right: 10px;
+    margin: 10px;
+}
+
+.content .main-content .post .read-more:hover {
+    background: #006669;
+    color: white !important;
+    transition: .25s;
+}
+
+.content .main-content .post .post-images {
+    width: 40%;
+    height: 100%;
+    float: left;
+}
+
+.content .main-content .recent-post-title {
+    margin: 20px;
+}
+
+.content .main-content .post .post-preview {
+    width: 60%;
+    padding: 10px;
+    float: right;
+}
+
+.btn {
+    padding: .5rem 1rem;
+    background: #006669;
+    color: white;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}
+
+.btn:hover {
+    color: white !important;
+    background: #006669;
+}
+
+.content .main-content .post .post-preview h2 a {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #455159;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.content .main-content .post .post-preview i {
+    font-size: 1.0rem;
+    color: #007bff;
+    margin: 2px;
+}
+
+.content .main-content .post .post-preview span {
+    font-size: 1.2rem;
+    font-weight: normal;
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+    margin-left: 4px;
+}
+
+
+.content .main-content .post .post-preview h2 a:hover {
+    color: #006669;
+    text-decoration: none;
+}
+
+/* CSS Sidebar */
+
+.content .sidebar {
+    width: 30%;
+    float: left;
+    height: 300px;
+}
+
+.content .sidebar .section {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    color: #455159;
+}
+
+.content .sidebar .section .section-title {
+    margin: 10px 0px 10px 0px;
+}
+
+.content .sidebar .section.search {
+    margin-top: 88px;
+}
+
+.content .sidebar .section.topics ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.content .sidebar .section.topics ul li a {
+    display: block;
+    padding: 15px 0px 15px 0px;
+    border-bottom: 1px solid #e0e0e0;
+    transition: all 0.3s;
+    text-decoration: none;
+    color: #455159;
+    font-weight: 500;
+}
+
+
+.content .sidebar .section.topics ul li a:hover {
+    padding-left: 20px;
+    transition: all 0.3s;
+}
+
+.text-input {
+    padding: .7rem 1rem;
+    display: block;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+    outline: none;
+    color: #444;
+    line-height: 1.5rem;
+    font-size: 1.2rem;
+    font-family: 'Lora', sans-serif;
+}
+
+/* CSS Footer */
+.footer {
+    position: relative;
+    background: #303036;
+    color: #d3d3d3;
+    height: 400px;
+    padding: 20px;
+}
+
+.footer .footer-content {
+    height: 350px;
+    display: flex;
+}
+
+.footer .footer-content .footer-section {
+    flex: 1;
+    padding: 25px;
+}
+
+.footer .footer-content h1,
+.footer .footer-content h2 {
+    color: white;
+}
+
+.footer .footer-content .about h1 span {
+    color: #05f7ff;
+}
+
+.footer .footer-content .about .contact span {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.footer .footer-content .about .socials a {
+    border: 1px solid gray;
+    width: 45px;
+    height: 41px;
+    padding-top: 5px;
+    margin-right: 5px;
+    text-align: center;
+    display: inline-block;
+    font-size: 1.3rem;
+    border-radius: 5px;
+}
+
+.footer .footer-content .about .socials a i {
+    color: white;
+}
+
+.footer .footer-content .about .socials a:hover {
+    border: 1px solid white;
+    color: white;
+    transition: all .3s;
+}
+
+.footer .footer-content .links ul a {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.footer .footer-content .links ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer .footer-content .links ul a:hover {
+    color: white;
+    margin-left: 15px;
+    transition: all .3s;
+}
+
+.footer .footer-content .contact-form .contact-input {
+    background: #272727;
+    color: #bebdbd;
+    margin-bottom: 10px;
+    line-height: 1.5rem;
+    padding: .9rem 1.4rem;
+    border: none;
+}
+
+.footer .footer-content .contact-form .contact-input:focus {
+    background: #1a1a1a;
+}
+
+.footer .footer-content .contact-form .contact-btn {
+    float: right;
+}
+
+.btn-big {
+    padding: .7rem 1.3rem;
+    line-height: 1.3rem;
+}
+
+.footer .footer-bottom {
+    background: #343a40;
+    color: #686868;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    padding-top: 20px;
+}
+
+#list {
+    margin-left: 300px;
+}
+</style>

@@ -15,13 +15,16 @@ posts.value.push(post)
 </script>
 
 <template>
-    <div id="app">
+    <bai1></bai1>
+    <!-- <bai2></bai2>
+    <bai3></bai3> -->
+    <!-- <div id="app">
         <h1>Ứng dụng Blog với VueJS</h1>
         <br>
         <CreatePost @add-post="addPost"></CreatePost>
         <br>
         <PostList :posts="posts"></PostList>
-    </div>
+    </div> -->
 </template>
 
 <style>

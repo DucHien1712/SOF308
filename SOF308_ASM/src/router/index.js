@@ -19,7 +19,7 @@ const routes = [
     component: () => import('../components/EditUserPage.vue'), 
   },
   {
-    path: '/details',  
+    path: '/post/:id', 
     name: 'Details',
     component: () => import('../components/Details.vue'), 
   },
