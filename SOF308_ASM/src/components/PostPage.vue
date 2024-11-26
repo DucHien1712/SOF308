@@ -1,63 +1,64 @@
 <template>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="/src/assets/images/Bee Blog.png" alt="">
+    <!-- Menubar -->
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="/src/assets/images/Bee Blog.png" alt="">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <router-link to="/" class="nav-link" aria-current="page">
+              <i class="fa-solid fa-house" id="icons"></i>Home
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/user" class="nav-link">
+              <i class="fa-solid fa-clipboard" id="icons"></i>CV
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/post-articles" class="nav-link">
+              <i class="fa-solid fa-upload" id="icons"></i>Post Articles
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/edit-profile" class="nav-link">
+              <i class="fa-regular fa-id-card" id="icons"></i>Edit Profile
+            </router-link>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Account
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#"><i class="fa-solid fa-house"
-                                id="icons"></i>Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fa-solid fa-clipboard" id="icons"></i>CV</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fa-solid fa-blog" id="icons"></i>Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fa-solid fa-film" id="icons"></i>Video</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fa-solid fa-calendar-days" id="icons"></i>Event</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Tài Khoản
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user" id="icons"></i>Login</a>
-                            </li>
-                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user-plus"
-                                        id="icons"></i>Signup</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-lock" id="icons"></i>Foget
-                                    Password</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown" id="list">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Đức Hiền
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-upload" id="icons"></i>
-                                    Post Articles</a>
-                            </li>
-                            <li><a class="dropdown-item" href="#"><i class="fa-regular fa-id-card" id="icons"></i>Edit
-                                    Profile</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+            <ul class="dropdown-menu">
+              <router-link to="/login" class="dropdown-item">
+                <i class="fa-solid fa-user" id="icons"></i>Login
+              </router-link>
+              <li><router-link to="/forgot-password" class="dropdown-item">
+                <i class="fa-solid fa-question" id="icons"></i>Forgot Password
+                </router-link></li>
+              <li><router-link to="/edit-profile" class="dropdown-item">
+                <i class="fa-solid fa-user-pen" id="icons"></i>Change Password
+                </router-link></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <router-link to="/language/vn" class="nav-link">Tiếng Việt</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/language/en" class="nav-link">Tiếng Anh</router-link>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
     <!-- Main Content -->
     <div class="container mt-5 mb-5">

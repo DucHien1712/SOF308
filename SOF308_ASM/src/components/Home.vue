@@ -17,23 +17,18 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/cv" class="nav-link">
+            <router-link to="/user" class="nav-link">
               <i class="fa-solid fa-clipboard" id="icons"></i>CV
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/user" class="nav-link">
-              <i class="fa-solid fa-blog" id="icons"></i>Blog
+            <router-link to="/post-articles" class="nav-link">
+              <i class="fa-solid fa-upload" id="icons"></i>Post Articles
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/video" class="nav-link">
-              <i class="fa-solid fa-film" id="icons"></i>Video
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/event" class="nav-link">
-              <i class="fa-solid fa-calendar-days" id="icons"></i>Event
+            <router-link to="/edit-profile" class="nav-link">
+              <i class="fa-regular fa-id-card" id="icons"></i>Edit Profile
             </router-link>
           </li>
           <li class="nav-item dropdown">
@@ -45,10 +40,10 @@
                 <i class="fa-solid fa-user" id="icons"></i>Login
               </router-link>
               <li><router-link to="/forgot-password" class="dropdown-item">
-                  <i class="fa-solid fa-lock" id="icons"></i>Forgot Password
+                <i class="fa-solid fa-question" id="icons"></i>Forgot Password
                 </router-link></li>
               <li><router-link to="/edit-profile" class="dropdown-item">
-                  <i class="fa-regular fa-id-card" id="icons"></i>Edit Profile
+                <i class="fa-solid fa-user-pen" id="icons"></i>Change Password
                 </router-link></li>
             </ul>
           </li>

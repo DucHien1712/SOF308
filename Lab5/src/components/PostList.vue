@@ -27,7 +27,6 @@
     
 <style>
 
-/* Global Styles (áp dụng chung cho cả 2 file) */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;

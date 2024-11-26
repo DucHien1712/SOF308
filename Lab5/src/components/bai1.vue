@@ -7,7 +7,7 @@
 <script setup>
     import {ref} from 'vue';
 
-    const hi = ref('Welcome VueJS');
+    const hi = ref('Lab5');
     const change = () => {
         hi.value = 'Hello Class';
     };

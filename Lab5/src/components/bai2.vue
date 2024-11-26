@@ -10,5 +10,5 @@
 import { ref } from 'vue';
 
 
-const userInput = ref('FPL');
+const userInput = ref('');
 </script>

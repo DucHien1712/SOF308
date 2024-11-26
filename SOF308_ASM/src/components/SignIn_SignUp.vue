@@ -7,6 +7,7 @@
         <input type="text" placeholder="Username" v-model="signUpData.username" />
         <input type="email" placeholder="Email" v-model="signUpData.email" />
         <input type="password" placeholder="Password" v-model="signUpData.password" />
+        <input type="password" placeholder="Confirm Password" v-model="signUpData.confirmPassword" />
         <span>or register with social platforms</span>
         <div class="sign-up-social-icons">
           <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>
@@ -56,40 +57,71 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-// Trạng thái để hiển thị form Sign Up hoặc Sign In
-const isSignUp = ref(false); // true là hiển thị Sign Up, false là hiển thị Sign In
+const router = useRouter();
 
-// Dữ liệu người dùng cho Sign Up
+const isSignUp = ref(false);
 const signUpData = ref({
   username: '',
   email: '',
-  password: ''
+  password: '',
+  confirmPassword: ''
 });
 
-// Dữ liệu người dùng cho Sign In
 const signInData = ref({
   username: '',
   password: ''
 });
 
-// Biến kiểm tra trạng thái đăng ký
-const isRegistered = ref(false);
-
-// Hàm xử lý chuyển đổi giữa Sign Up và Sign In
 const toggleForm = () => {
   isSignUp.value = !isSignUp.value;
 };
 
+const saveAccountToLocalStorage = (account) => {
+  const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+  accounts.push(account);
+  localStorage.setItem('accounts', JSON.stringify(accounts));
+};
+
+const checkAccountInLocalStorage = (username, password) => {
+  const accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+  return accounts.find(acc => acc.username === username && acc.password === password);
+};
+
+const encryptPassword = (password) => {
+  return btoa(password); // Mã hóa mật khẩu
+};
+
+const decryptPassword = (encryptedPassword) => {
+  return atob(encryptedPassword); // Giải mã mật khẩu
+};
+
 // Hàm xử lý đăng ký
 const signUp = () => {
-  if (signUpData.value.username && signUpData.value.email && signUpData.value.password) {
-    console.log('Sign Up Success:', signUpData.value);
-    isRegistered.value = true; // Đánh dấu đã đăng ký thành công
-    alert(`Welcome, ${signUpData.value.username}!`);
-    // Xóa thông tin mật khẩu sau khi đăng ký thành công
+  if (signUpData.value.username && signUpData.value.email && signUpData.value.password && signUpData.value.confirmPassword) {
+    if (signUpData.value.password !== signUpData.value.confirmPassword) {
+      alert('Passwords do not match!');
+      return;
+    }
+
+    const existingAccounts = JSON.parse(localStorage.getItem('accounts')) || [];
+    const isExistingUser = existingAccounts.some(acc => acc.username === signUpData.value.username);
+
+    if (isExistingUser) {
+      alert('Username already exists! Please choose another username.');
+      return;
+    }
+
+    saveAccountToLocalStorage({
+      username: signUpData.value.username,
+      email: signUpData.value.email,
+      password: encryptPassword(signUpData.value.password)
+    });
+
+    alert(`Welcome, ${signUpData.value.username}! Your account has been created.`);
     signUpData.value.password = '';
-    // Chuyển sang form Sign In
+    signUpData.value.confirmPassword = '';
     isSignUp.value = false;
   } else {
     alert('Please fill in all fields!');
@@ -99,13 +131,22 @@ const signUp = () => {
 // Hàm xử lý đăng nhập
 const signIn = () => {
   if (signInData.value.username && signInData.value.password) {
-    console.log('Sign In Success:', signInData.value);
-    alert(`Hello again, ${signInData.value.username}!`);
+    const account = checkAccountInLocalStorage(signInData.value.username, signInData.value.password);
+    if (account) {
+      alert(`Hello again, ${signInData.value.username}!`);
+      router.push('/');
+    } else {
+      alert('Account does not exist. Please sign up first.');
+      isSignUp.value = true;
+    }
   } else {
     alert('Please enter your username and password!');
   }
 };
 </script>
+
+
+
 
 
 <style scoped>

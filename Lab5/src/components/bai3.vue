@@ -16,8 +16,6 @@
             </div>
         </form>
 
-
-        <!-- Hiển thị thông tin ngay sau khi nhập -->
         <div class="info-display mt-4 p-3 bg-dark text-white rounded">
             <h2>Thông tin đã nhập:</h2>
             <p><strong>Họ và Tên:</strong> {{ userInfo.name }}</p>
@@ -32,7 +30,6 @@
 import { reactive } from 'vue';
 
 
-// Khởi tạo đối tượng thông tin người dùng sử dụng reactive để tạo reactivity
 const userInfo = reactive({
     name: '',
     age: null,
@@ -46,20 +43,19 @@ const userInfo = reactive({
     width: 800px;
     margin: 0 auto;
 }
-/* CSS cho khung form */
+
 form {
-    background-color: #f8f9fa; /* Nền sáng */
+    background-color: #f8f9fa; 
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    max-width: 600px; /* Tăng chiều rộng tối đa */
-    width: 100%; /* Chiếm toàn bộ chiều rộng container */
-    margin-left: auto; /* Căn giữa */
-    margin-right: auto; /* Căn giữa */
+    max-width: 600px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-/* CSS cho tiêu đề chính */
 h1 {
     color: #343a40;
     font-size: 24px;
@@ -67,7 +63,6 @@ h1 {
     text-align: center;
 }
 
-/* CSS cho nhãn (label) */
 form label {
     font-weight: bold;
     margin-bottom: 8px;
@@ -75,13 +70,12 @@ form label {
     color: #495057;
 }
 
-/* CSS cho ô nhập liệu */
 form input {
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ced4da;
     border-radius: 4px;
-    width: 100%; /* Đảm bảo chiều rộng ô nhập liệu theo form */
+    width: 100%; 
     margin-bottom: 15px;
     transition: border-color 0.3s ease;
 }
@@ -92,17 +86,16 @@ form input:focus {
     box-shadow: 0 0 5px rgba(128, 189, 255, 0.5);
 }
 
-/* CSS cho phần hiển thị thông tin */
 .info-display {
     background-color: #343a40;
     color: white;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 600px; /* Tăng chiều rộng tối đa */
-    width: 100%; /* Chiếm toàn bộ chiều rộng container */
-    margin-left: auto; /* Căn giữa */
-    margin-right: auto; /* Căn giữa */
-    padding: 20px; /* Tăng khoảng cách bên trong */
+    max-width: 600px;
+    width: 100%;
+    margin-left: auto; 
+    margin-right: auto; 
+    padding: 20px; 
 }
 
 .info-display h2 {
@@ -119,15 +112,13 @@ form input:focus {
 }
 
 .info-display p strong {
-    color: #ffc107;
+    color: white;
 }
 
-/* Tùy chỉnh khoảng cách giữa các phần */
 .mb-3 {
     margin-bottom: 20px;
 }
 
-/* Hiệu ứng hover cho ô nhập liệu */
 form input:hover {
     border-color: #6c757d;
 }

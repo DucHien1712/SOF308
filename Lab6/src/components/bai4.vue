@@ -53,14 +53,10 @@
 <script setup>
 import { ref } from 'vue'
 
-// Dữ liệu mẫu ban đầu
 const students = ref([
-    { name: 'Đặng Anh Quân', score: 8, dob: '2005-11-11' },
-    { name: 'Nguyễn Trường Thịnh', score: 9, dob: '2005-05-24' }
 
 ])
 
-// Biến quản lý trạng thái form
 const student = ref({
     name : '',
     score: null,
@@ -71,13 +67,10 @@ let isEditing = ref(false)
 let editingIndex = ref(null)
 function submitForm() {
     if (isEditing.value) {
-        // Cập nhật thông tin học sinh
-        // { ... student. value } sẽ tạo một bản sao mới của đối tượng student. value
         students.value[editingIndex.value] = { ... student.value }
         isEditing.value = false
         editingIndex.value = null
     } else {
-        // Thêm học sinh mới
         students.value.push({ ... student.value })
     }
     resetForm ()

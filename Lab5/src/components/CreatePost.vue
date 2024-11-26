@@ -11,7 +11,6 @@
 <script setup>
     import { ref } from 'vue'
 
-    // Sử dụng defineEmits để emit sự kiện
     const emit = defineEmits(['add-post'])
 
     const title = ref('')
@@ -20,17 +19,15 @@
 
     function submitPost() {
     if (title.value && content.value && author.value) {
-    const newPost = {
-    title: title.value,
-    content: content.value,
-    author: author.value
+        const newPost = {
+        title: title.value,
+        content: content.value,
+        author: author.value
 
     }
 
-    // Gửi sự kiện 'add-post' với dữ liệu của bài viết
     emit('add-post', newPost)
 
-    // Reset fields
     title.value =
     content.value
     author.value
@@ -41,7 +38,6 @@
 
 <style>
 
-/* Global Styles (áp dụng chung cho cả 2 file) */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
