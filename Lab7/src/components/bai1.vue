@@ -27,13 +27,12 @@
 import { ref } from 'vue';
 
 const newToDo = ref('');
-const jobs = ref(['Ăn sáng', 'Đi học', 'Chơi bóng rổ'
-]);
+const jobs = ref([]);
 
 const addList = () => {
-    if (newToDo.value.trim()) { //loại bỏ khoảng trắng ở đầu và cuối của chuỗi
+    if (newToDo.value.trim()) { 
         jobs.value.push(newToDo.value.trim());
-        newToDo.value = ''; // Reset input field
+        newToDo.value = ''; 
     }
 };
 
@@ -45,32 +44,31 @@ const removeList = (index) => {
 
 <style scoped>
 .container {
-    width: 1000px; /* Độ rộng container chính */
-    display: flex; /* Dùng Flexbox để canh chỉnh */
-    justify-content: space-between; /* Chia đều không gian giữa các phần */
+    width: 1000px; 
+    display: flex; 
+    justify-content: space-between; 
     align-items: flex-start;
-    gap: 20px; /* Khoảng cách giữa form và danh sách */
+    gap: 20px;
 }
 
-/* Form thêm công việc */
 form {
-    flex: 1; /* Chiếm không gian vừa đủ */
-    max-width: 300px; /* Giới hạn chiều rộng form */
+    flex: 1; 
+    max-width: 300px; 
 }
 
 form h3 {
-    font-size: 20px; /* Kích thước tiêu đề */
+    font-size: 20px; 
     margin-bottom: 15px;
 }
 
 form input,
 form button {
-    width: 100%; /* Chiều rộng full container */
+    width: 100%; 
     padding: 10px;
     margin-bottom: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
-    border-radius: 5px; /* Bo góc */
+    border-radius: 5px; 
 }
 
 form button {
@@ -81,12 +79,11 @@ form button {
 }
 
 form button:hover {
-    background-color: #0056b3; /* Màu khi hover */
+    background-color: #0056b3; 
 }
 
-/* Danh sách công việc */
 ul {
-    flex: 2; /* Chiếm không gian lớn hơn */
+    flex: 2; 
     width: 100%;
 }
 
@@ -102,7 +99,7 @@ ul h1 {
     padding: 10px;
     border: 1px solid #ccc;
     margin-bottom: 10px;
-    border-radius: 5px; /* Bo góc nhẹ */
+    border-radius: 5px; 
 }
 
 .list-group-item button {
@@ -116,7 +113,7 @@ ul h1 {
 }
 
 .list-group-item button:hover {
-    background-color: #c82333; /* Màu khi hover */
+    background-color: #c82333; 
 }
 </style>
 

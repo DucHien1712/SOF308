@@ -61,42 +61,52 @@
   </nav>
 
     <!-- Main Content -->
-    <div class="container mt-5 mb-5">
-        <div class="profile-container mx-auto p-4" style="max-width: 600px;">
-            <h2 class="text-center mb-4">Chỉnh Sửa Thông Tin Cá Nhân</h2>
-            <!-- Profile Picture Section -->
-            <div class="text-center mb-4">
-                <img :src="profilePic" alt="Avatar" class="profile-pic" id="profilePic"
-                    style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">
-                <div class="change-pic-btn">
-                    <label for="uploadPic" class="btn btn-outline-primary btn-sm">Thay Đổi Ảnh</label>
-                    <input type="file" id="uploadPic" class="d-none" accept="image/*" @change="onImageChange">
-                </div>
-            </div>
-
-            <!-- Form Section -->
-            <form @submit.prevent="saveChanges">
-                <div class="mb-3">
-                    <label for="fullName" class="form-label">Họ và Tên</label>
-                    <input type="text" class="form-control" id="fullName" v-model="formData.fullName"
-                        placeholder="Nhập họ và tên">
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" v-model="formData.email"
-                        placeholder="Nhập email">
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Mật khẩu</label>
-                    <input type="password" class="form-control" id="password" v-model="formData.password"
-                        placeholder="Nhập mật khẩu">
-                </div>
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
-                </div>
-            </form>
-        </div>
+<div class="container mt-5 mb-5" v-if="editing">
+  <div class="profile-container mx-auto p-4" style="max-width: 600px;">
+    <h2 class="text-center mb-4">Chỉnh Sửa Thông Tin Cá Nhân</h2>
+    <!-- Profile Picture Section -->
+    <div class="text-center mb-4">
+      <img :src="profile.image" alt="Avatar" class="profile-pic" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">
+      <div class="change-pic-btn">
+        <label for="uploadPic" class="btn btn-outline-primary btn-sm">Thay Đổi Ảnh</label>
+        <input type="file" id="uploadPic" class="d-none" accept="image/*" @change="onImageChange">
+      </div>
     </div>
+
+    <!-- Form Section -->
+    <form @submit.prevent="saveChanges">
+      <div class="mb-3">
+        <label for="fullName" class="form-label">Họ và Tên</label>
+        <input type="text" class="form-control" id="fullName" v-model="profile.name" placeholder="Nhập họ và tên">
+      </div>
+      <div class="mb-3">
+        <label for="dob" class="form-label">Ngày sinh</label>
+        <input type="date" class="form-control" id="dob" v-model="profile.dob" placeholder="Chọn ngày sinh">
+      </div>
+      <div class="mb-3">
+        <label for="address" class="form-label">Địa chỉ</label>
+        <input type="text" class="form-control" id="address" v-model="profile.address" placeholder="Nhập địa chỉ">
+      </div>
+      <div class="mb-3">
+        <label for="gender" class="form-label">Giới tính</label>
+        <select class="form-control" id="gender" v-model="profile.gender">
+          <option value="Nam">Nam</option>
+          <option value="Nữ">Nữ</option>
+          <option value="Khác">Khác</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="quote" class="form-label">Châm ngôn</label>
+        <input type="text" class="form-control" id="quote" v-model="profile.quote" placeholder="Nhập châm ngôn">
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
+        <button @click="cancelEdit" type="button" class="btn btn-secondary">Hủy</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 
     <div class="footer">
         <div class="footer-content">

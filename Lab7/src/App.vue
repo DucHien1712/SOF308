@@ -6,6 +6,9 @@ import bai4 from './components/bai4.vue'
 </script>
 
 <template>
+  <bai1></bai1>
+  <bai2></bai2>
+  <bai3></bai3>
   <bai4></bai4>
 
 </template>

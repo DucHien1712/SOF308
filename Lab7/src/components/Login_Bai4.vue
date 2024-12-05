@@ -30,7 +30,6 @@
   const emit = defineEmits(['loggedIn']);
   function handleLogin() {
     if (username.value && password.value) {
-      // phát sự kiện 'loggedIn'
       emit('loggedIn', username.value);
     }
   }
@@ -38,28 +37,28 @@
   
   <style scoped>
   .login-container {
-    font-family: 'Arial', sans-serif; /* Chọn font chữ dễ đọc */
-    color: #333; /* Màu chữ đen cho dễ nhìn */
+    font-family: 'Arial', sans-serif; 
+    color: #333; 
     padding: 20px;
-    background-color: #f9f9f9; /* Màu nền nhẹ nhàng */
-    border-radius: 10px; /* Bo tròn các góc */
+    background-color: #f9f9f9;
+    border-radius: 10px; 
   }
   
   h2 {
-    color: #007bff; /* Màu chữ xanh cho tiêu đề */
+    color: #007bff; 
     font-size: 24px;
     margin-bottom: 20px;
   }
   
   label {
     font-size: 14px;
-    color: #555; /* Màu chữ xám cho nhãn */
+    color: #555; 
   }
   
   .form-control {
-    font-size: 16px; /* Cỡ chữ cho input */
+    font-size: 16px; 
     padding: 10px;
-    border-radius: 5px; /* Bo tròn các góc */
+    border-radius: 5px; 
     border: 1px solid #ddd;
     width: 100%;
   }
@@ -69,14 +68,14 @@
     padding: 10px 15px;
     border-radius: 5px;
     width: 100%;
-    background-color: #007bff; /* Màu nền của nút */
+    background-color: #007bff;
     color: white;
     border: none;
     cursor: pointer;
   }
   
   button.btn:hover {
-    background-color: #0056b3; /* Màu nền của nút khi hover */
+    background-color: #0056b3; 
   }
   
   .mb-3 {

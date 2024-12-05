@@ -1,6 +1,5 @@
 <template>
     <div class="container">
-      <!-- Form đăng ký (Bên trái) -->
       <div class="form-container">
         <h3>Đăng ký người dùng</h3>
         <form @submit.prevent="register">
@@ -46,7 +45,6 @@
         </form>
       </div>
   
-      <!-- Hiển thị thông tin đăng ký (Bên phải) -->
       <div v-if="isRegistered" class="info-container">
         <h4>Thông tin đăng ký:</h4>
         <ul>
@@ -63,7 +61,6 @@
   <script setup>
   import { ref } from 'vue';
   
-  // Dữ liệu người dùng
   const user = ref({
     name: '',
     email: '',
@@ -73,13 +70,11 @@
     language: 'Tiếng Việt'
   });
   
-  const isRegistered = ref(false); // Biến kiểm tra xem đã đăng ký hay chưa
+  const isRegistered = ref(false); 
   
-  // Hàm đăng ký
   const register = () => {
-    // Khi đăng ký thành công, ẩn mật khẩu và hiển thị thông tin
     isRegistered.value = true;
-    user.value.password = ''; // Ẩn mật khẩu sau khi đăng ký
+    user.value.password = ''; 
   }
   </script>
   

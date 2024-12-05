@@ -26,25 +26,31 @@
               <i class="fa-solid fa-upload" id="icons"></i>Post Articles
             </router-link>
           </li>
-          <li class="nav-item">
-            <router-link to="/edit-profile" class="nav-link">
-              <i class="fa-regular fa-id-card" id="icons"></i>Edit Profile
-            </router-link>
-          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Account
             </a>
             <ul class="dropdown-menu">
-              <router-link to="/login" class="dropdown-item">
-                <i class="fa-solid fa-user" id="icons"></i>Login
-              </router-link>
-              <li><router-link to="/forgot-password" class="dropdown-item">
-                <i class="fa-solid fa-question" id="icons"></i>Forgot Password
-                </router-link></li>
-              <li><router-link to="/edit-profile" class="dropdown-item">
-                <i class="fa-solid fa-user-pen" id="icons"></i>Change Password
-                </router-link></li>
+              <li>
+                <router-link v-if="!isLoggedIn" to="/login" class="dropdown-item">
+                  <i class="fa-solid fa-user" id="icons"></i> Login
+                </router-link>
+              </li>
+              <li v-if="isLoggedIn">
+                <router-link to="/forgot-password" class="dropdown-item">
+                  <i class="fa-solid fa-question" id="icons"></i> Forgot Password
+                </router-link>
+              </li>
+              <li v-if="isLoggedIn">
+                <router-link to="/edit-profile" class="dropdown-item">
+                  <i class="fa-solid fa-user-pen" id="icons"></i> Change Password
+                </router-link>
+              </li>
+              <li v-if="isLoggedIn">
+                <button @click="logout" class="dropdown-item">
+                  <i class="fa-solid fa-sign-out" id="icons"></i> Logout
+                </button>
+              </li>
             </ul>
           </li>
         </ul>
@@ -115,7 +121,6 @@
       <div class="footer-section about">
         <h1 class="logo-text"><span>Đức</span>Hiền</h1>
         <p>
-          Nội dung footer ở đây
         </p>
         <div class="contact">
           <span><i class="fa-solid fa-phone-flip"></i> &nbsp;0812.529.537</span>
@@ -155,12 +160,41 @@
   </div>
 </template>
 
+
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const isLoggedIn = ref(false);
+
+const userStatus = localStorage.getItem('isLoggedIn');
+isLoggedIn.value = userStatus === 'true';
+
+const logout = () => {
+  localStorage.clear();
+  isLoggedIn.value = false;
+  router.push('/login');
+  Swal.fire({
+    icon: 'success',
+    title: 'Logged Out',
+    text: 'You have successfully logged out!',
+    position: 'top',
+    toast: true,
+    showConfirmButton: false,
+    timer: 3000,
+    customClass: {
+    popup: 'small-toast',
+    },
+  });
+};
+</script>
+ 
 <script>
 export default {
   name: "CarouselComponent",
   data() {
     return {
-      // List of image URLs to be displayed in the carousel
       images: [
         "/src/assets/images/banner1.jpg",
         "/src/assets/images/banner2.jpg",
@@ -217,7 +251,6 @@ export default {
     };
   },
   mounted() {
-    // Initialize Slick Carousel
     $(this.$refs.carousel).slick({
       slidesToShow: 3,
       slidesToScroll: 1,
@@ -617,4 +650,24 @@ html {
   left: 0px;
   padding-top: 20px;
 }
+
+/* CSS cho thông báo đăng xuất nhỏ */
+.small-toast {
+  font-size: 14px !important; /* Chỉnh kích thước font */
+  padding: 10px 20px !important; /* Chỉnh padding cho thông báo */
+  border-radius: 5px; /* Đặt bo góc */
+}
+
+/* Điều chỉnh vị trí thông báo */
+.swal2-container {
+  top: 10px !important; /* Đặt vị trí thông báo ở phía trên */
+  left: 50% !important; /* Canh giữa */
+  transform: translateX(-50%) !important; /* Canh giữa theo chiều ngang */
+}
+
+/* Điều chỉnh màu sắc nền thông báo (tuỳ chỉnh) */
+.swal2-popup {
+  color: black !important; /* Màu chữ trắng */
+}
+
 </style>

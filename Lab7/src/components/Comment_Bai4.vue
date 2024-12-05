@@ -37,19 +37,14 @@
   
   const commentText = ref('');
   
-  // Mảng chứa các bình luận đã gửi
   const comments = ref([]);
-  
-  // Xử lý gửi bình luận
+
   function submitComment() {
     if (commentText.value) {
-      // Thêm bình luận mới vào mảng comments
       comments.value.push({
-        name: props.username, // Sử dụng tên từ props
+        name: props.username, 
         text: commentText.value
       });
-  
-      // Xóa dữ liệu trong form sau khi gửi
       commentText.value = '';
     }
   }

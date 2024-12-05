@@ -68,77 +68,72 @@ const logout = () => {
 </script>
 
 <style scoped>
-/* Tổng thể */
+
 div {
     font-family: Arial, sans-serif;
-    color: #333; /* Màu chữ cơ bản */
+    color: #333; 
 }
 
-/* Tiêu đề */
 h3 {
-    font-size: 24px; /* Cỡ chữ lớn */
+    font-size: 24px; 
     font-weight: bold;
     margin-bottom: 20px;
-    color: #007bff; /* Màu xanh chủ đạo */
+    color: #007bff; 
 }
 
-/* Form */
 form {
-    border: 1px solid #ccc; /* Viền nhạt xung quanh form */
-    border-radius: 8px; /* Bo góc nhẹ */
-    padding: 20px; /* Khoảng cách bên trong */
-    background-color: #f9f9f9; /* Màu nền nhạt */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng nhẹ */
+    border: 1px solid #ccc;
+    border-radius: 8px; 
+    padding: 20px; 
+    background-color: #f9f9f9; 
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
 label {
-    font-size: 16px; /* Cỡ chữ của nhãn */
+    font-size: 16px;
     margin-bottom: 5px;
 }
 
 input {
-    font-size: 14px; /* Cỡ chữ của input */
+    font-size: 14px; 
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ccc; /* Viền nhạt */
-    border-radius: 4px; /* Bo góc input */
-    width: 100%; /* Full chiều ngang */
-    box-sizing: border-box; /* Không bị tràn nội dung */
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    width: 100%; 
+    box-sizing: border-box; 
 }
 
 input:focus {
-    border-color: #007bff; /* Đổi màu viền khi focus */
-    outline: none; /* Bỏ viền mặc định */
+    border-color: #007bff; 
+    outline: none; 
 }
 
-/* Thông báo lỗi */
 p {
-    font-size: 14px; /* Cỡ chữ nhỏ hơn */
+    font-size: 14px; 
     margin-top: 5px;
     margin-bottom: 0;
 }
 
-/* Nút */
 button {
     font-size: 16px;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
-    background-color: #007bff; /* Màu nền xanh chủ đạo */
+    background-color: #007bff; 
     color: white;
     cursor: pointer;
-    transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu */
+    transition: background-color 0.3s ease; 
 }
 
 button:hover {
-    background-color: #0056b3; /* Màu đậm hơn khi hover */
+    background-color: #0056b3;
 }
 
 button:focus {
-    outline: none; /* Bỏ viền mặc định khi nhấn */
+    outline: none; 
 }
 
-/* Phần Welcome */
 .welcome-message {
     font-size: 18px;
     margin-bottom: 15px;

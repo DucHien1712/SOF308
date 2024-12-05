@@ -4,7 +4,9 @@
       <form @submit.prevent="login">
         <input v-model="username" placeholder="Tên đăng nhập" />
         <input type="password" v-model="password" placeholder="Mật khẩu" />
-        <button type="submit">Đăng nhập</button>
+        <RouterLink to="/infor">
+          <button type="submit">Đăng nhập</button>
+        </RouterLink>
       </form>
     </div>
   </template>

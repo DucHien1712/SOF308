@@ -1,6 +1,6 @@
 <template>
     <!-- Menubar -->
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
         <img src="/src/assets/images/Bee Blog.png" alt="">
@@ -26,25 +26,31 @@
               <i class="fa-solid fa-upload" id="icons"></i>Post Articles
             </router-link>
           </li>
-          <li class="nav-item">
-            <router-link to="/edit-profile" class="nav-link">
-              <i class="fa-regular fa-id-card" id="icons"></i>Edit Profile
-            </router-link>
-          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Account
             </a>
             <ul class="dropdown-menu">
-              <router-link to="/login" class="dropdown-item">
-                <i class="fa-solid fa-user" id="icons"></i>Login
-              </router-link>
-              <li><router-link to="/forgot-password" class="dropdown-item">
-                <i class="fa-solid fa-question" id="icons"></i>Forgot Password
-                </router-link></li>
-              <li><router-link to="/edit-profile" class="dropdown-item">
-                <i class="fa-solid fa-user-pen" id="icons"></i>Change Password
-                </router-link></li>
+              <li>
+                <router-link v-if="!isLoggedIn" to="/login" class="dropdown-item">
+                  <i class="fa-solid fa-user" id="icons"></i> Login
+                </router-link>
+              </li>
+              <li v-if="isLoggedIn">
+                <router-link to="/forgot-password" class="dropdown-item">
+                  <i class="fa-solid fa-question" id="icons"></i> Forgot Password
+                </router-link>
+              </li>
+              <li v-if="isLoggedIn">
+                <router-link to="/edit-profile" class="dropdown-item">
+                  <i class="fa-solid fa-user-pen" id="icons"></i> Change Password
+                </router-link>
+              </li>
+              <li v-if="isLoggedIn">
+                <button @click="logout" class="dropdown-item">
+                  <i class="fa-solid fa-sign-out" id="icons"></i> Logout
+                </button>
+              </li>
             </ul>
           </li>
         </ul>
@@ -94,33 +100,33 @@
             <div class="section popular">
                 <h2 class="section-title">Popular</h2>
                 <div class="post clearfix">
-                    <img src="" alt="">
+                    <img src="/src/assets/images/sidebar1.jpg" alt="">
                     <a href="" class="title">
-                        <h4>Content</h4>
+                        <h4>'Phố cà phê đường tàu nên thành điểm du lịch'</h4>
                     </a>
                 </div>
                 <div class="post clearfix">
-                    <img src="" alt="">
+                    <img src="/src/assets/images/sidebar2.jpg" alt="">
                     <a href="" class="title">
-                        <h4>Content</h4>
+                        <h4>Vì sao bữa ăn Omakase giá tới chục triệu đồng?</h4>
                     </a>
                 </div>
                 <div class="post clearfix">
-                    <img src="" alt="">
+                    <img src="/src/assets/images/sidebar3.jpg" alt="">
                     <a href="" class="title">
-                        <h4>Content</h4>
+                        <h4>Người Nhật Bản ngắm lá thu muộn</h4>
                     </a>
                 </div>
                 <div class="post clearfix">
-                    <img src="" alt="">
+                    <img src="/src/assets/images/sidebar4.jpg" alt="">
                     <a href="" class="title">
-                        <h4>Content</h4>
+                        <h4>Kinh nghiệm thuê phòng tiện và rẻ ở Thổ Nhĩ Kỳ</h4>
                     </a>
                 </div>
                 <div class="post clearfix">
-                    <img src="" alt="">
+                    <img src="/src/assets/images/sidebar5.jpg" alt="">
                     <a href="" class="title">
-                        <h4>Content</h4>
+                        <h4>Tiệc trà riêng tư giá hàng chục triệu đồng</h4>
                     </a>
                 </div>
             </div>
@@ -146,7 +152,6 @@
             <div class="footer-section about">
                 <h1 class="logo-text"><span>Đức</span>Hiền</h1>
                 <p>
-                    Nội dung footer ở đây
                 </p>
                 <div class="contact">
                     <span><i class="fa-solid fa-phone-flip"></i> &nbsp;0812.529.537</span>
@@ -188,27 +193,54 @@
     </div>
 </template>
 
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const isLoggedIn = ref(false);
+
+const userStatus = localStorage.getItem('isLoggedIn');
+isLoggedIn.value = userStatus === 'true';
+
+const logout = () => {
+  localStorage.clear();
+  isLoggedIn.value = false;
+  router.push('/login');
+  Swal.fire({
+    icon: 'success',
+    title: 'Logged Out',
+    text: 'You have successfully logged out!',
+    position: 'top',
+    toast: true,
+    showConfirmButton: false,
+    timer: 3000,
+    customClass: {
+    popup: 'small-toast',
+    },
+  });
+};
+</script>
+
 <script>
 export default {
     data() {
         return {
-            post: {}, // Đối tượng chứa dữ liệu bài viết
-            comments: [ // Danh sách bình luận mẫu
-                { user: 'Nguyễn Văn A', text: 'Bài viết rất hay!', date: 'November 24, 2024' },
-                { user: 'Trần Thị B', text: 'Tôi rất thích thông tin trong bài.', date: 'November 23, 2024' }
-            ],
+            post: {}, // Dữ liệu bài viết
+            comments: [], // Danh sách bình luận
             newComment: '' // Nội dung bình luận mới
         };
     },
     created() {
         // Lấy ID từ URL
         const postId = this.$route.params.id;
-        this.fetchPostDetails(postId);  // Lấy chi tiết bài viết theo ID
+        this.fetchPostDetails(postId); // Lấy chi tiết bài viết theo ID
+    },
+    mounted() {
+        this.loadComments(); // Tải bình luận từ Local Storage khi trang được tải
     },
     methods: {
         fetchPostDetails(id) {
-            // Giả sử bạn có một API hoặc dữ liệu bài viết từ một nguồn nào đó
-            // Ví dụ ở đây là mảng bài viết trong `posts`
             const posts = [
                 { id: 1, title: 'Bảo tàng Lịch Sử Quân sự Việt Nam<br> Ghi dấu trang sử hào hùng', author: 'Đức Hiền', date: 'November 24, 2024', content: 'Dành cho những bạn nào chưa biết, Bảo tàng Lịch sử Quân sự Việt Nam nằm ở Hà Nội tại địa chỉ 28A Điện<br> Biên Phủ, quận Ba Đình và được xây dựng ngay cạnh Cột Cờ Hà Nội. Bảo tàng này không chỉ mang dáng <br> vóc hiện đại mà còn giữ gìn và tôn vinh giá trị lịch sử. Bảo tàng Lịch sử Quân sự Việt Nam là một công trình <br> văn hóa lịch sử đặc biệt, được Bộ Quốc phòng đầu tư xây dựng trên địa bàn hai phường Tây Mỗ và Đại Mỗ <br> thuộc quận Nam Từ Liêm, Hà Nội, từ năm 2019. Với diện tích khuôn viên rộng lớn lên tới 386.600m², bảo tàng này không chỉ mang dáng vóc hiện đại mà còn giữ gìn và tôn vinh giá trị lịch sử. Tòa nhà chính của bảo tàng bao gồm 4 tầng nổi và 1 tầng trệt, với tổng diện tích xây dựng 23.198m² và diện tích sàn lên tới 64.640m². Điểm nhấn kiến trúc là tòa tháp Chiến thắng cao 45m, một biểu tượng đầy tự hào về tinh thần chiến đấu bất khuất của dân tộc.<br> <br>Hiện tại, bảo tàng đang lưu giữ hơn 150.000 hiện vật quý giá, trong đó có 4 bảo vật quốc gia, phản ánh chân thực những chặng đường lịch sử vẻ vang của quân đội Việt Nam. Với vai trò không chỉ là nơi lưu giữ lịch sử, bảo tàng còn là địa điểm thu hút du khách, khơi dậy lòng yêu nước và tự hào dân tộc cho thế hệ trẻ, góp phần lan tỏa giá trị lịch sử trong cộng đồng.<br><br> Bảo tàng Lịch sử Quân sự Việt Nam là 1 trong 6 bảo tàng quốc gia và là bảo tàng đứng đầu hệ thống các bảo tàng trong Quân đội. Khu bảo tàng nổi bật với khu vực tòa tháp Chiến Thắng và sân trước cao 45m với 4 khối nhà bảo tàng gồm 4 tầng nổi và 1 tầng trệt với diện tích được xây dựng lên đến 23.198m2.<br><br> Tại khu vực trưng bày ngoài trời của Bảo tàng Lịch sử Quân sự Việt Nam, du khách sẽ có cơ hội khám phá nhiều loại vũ khí và phương tiện quân sự lớn, từ pháo 85mm, pháo cao xạ 57mm cho đến xe tăng PT67 số hiệu 555. Những hiện vật nổi bật khác bao gồm máy bay MiG 17 (số hiệu 2047), SU22, và pháo tự hành M-107 với biệt danh "Vua chiến trường". Đặc biệt, nơi đây còn lưu giữ các loại máy bay quân đội Mỹ từng sử dụng trong chiến tranh Việt Nam, như A37, F5E, CH47, C130, cùng hàng chục loại bom và nhiều thiết bị chiến tranh khác. Mỗi hiện vật không chỉ là bản gốc mà còn chứa đựng câu chuyện lịch sử oai hùng, minh chứng rõ nét cho sự kiên cường và sáng tạo của quân dân Việt Nam qua các thời kỳ đấu tranh.' },
                 { id: 2, title: 'Một ngày ở phố cổ Hà Nội mùa thu', author: 'Tâm Anh', date: 'November 24, 2024', content: 'Thời tiết đẹp ở Hà Nội dịp Giải phóng Thủ đô (10/10) là cơ hội để không chỉ khách du lịch mà cả người dân dạo chơi trong phố cổ. Chụp ảnh, trải nghiệm food tour, xem triển lãm và ngắm Hà Nội từ trên cao là những gợi ý cho du khách khi đến Hà Nội trong một ngày. Các trải nghiệm có nhiều hoạt động chỉ diễn ra trong mùa thu, tập trung ở phố cổ và khu vực gần hồ Gươm. Vào thu, trời Hà Nội sẽ sáng muộn hơn mùa hè. Khoảng 6h bước ra đường, du khách sẽ cảm nhận không khí trong lành, se se lạnh, nắng rực rỡ nhưng không bị lạnh quá hay nóng đổ mồ hôi.<br> <br> Độ ẩm thường dưới 50% nên sẽ có cảm giác hơi khô. Đây là một trải nghiệm đặc biệt của tiết trời thu, những thời điểm khác trong năm không có. Mùa thu Hà Nội thường ngắn nên hãy tận hưởng khoảnh khắc này. Nếu từ miền Nam ra, du khách nên mang theo một chiếc áo khoác mỏng hoặc sơ mi dài tay. Trong lần đầu tiên Michelin đến Việt Nam, nhiều quán phở ở Hà Nội được nhận các danh hiệu Selected (được Michelin gợi ý) và Bib Gourmand (quán ngon, giá hợp lý), trong đó có Phở Tư Lùn (hay phở Ấu Triệu) bên hông Nhà thờ lớn. <br> <br> Nước dùng đậm đà, béo là đặc trưng của hàng phở này. Quán mở cửa từ 6h30. Nếu chọn ngồi ngoài vỉa hè, du khách phải lấy ghế làm bàn hoặc bưng bát ăn. "Combo" mùa thu sẽ không thể thiếu một ly trà hay cà phê kèm một chút cốm mộc, cốm xào cùng vài quả chuối tiêu hoặc sấu chín ngâm. Đây là những món ăn đặc trưng mùa thu Hà Nội. Du khách có thể dễ dàng mua tại nhiều hàng rong hoặc các cửa hàng dọc phố Lý Quốc Sư trước mặt Nhà thờ lớn. Quanh khu vực nhà thờ, du khách có thể chọn các quán cà phê vỉa hè hoặc các quán "sang chảnh" hơn, ngắm Nhà thờ từ những căn gác, tùy phong cách. Nhà thờ lớn buổi sáng khá yên tĩnh. Những ngày tháng 10, đi qua các địa điểm nổi tiếng của Hà Nội như hồ Gươm, Nhà thờ Lớn, phố cổ, cầu Long Biên bạn sẽ bắt gặp rất nhiều người đến chụp ảnh, gồm cả du khách và người Hà Nội, với trang phục áo dài. Ánh nắng của mùa thu tạo nên những bức ảnh lung linh. Nếu muốn vắng vẻ, hãy chụp buổi sáng sớm, khi kết hợp đi dạo, muốn có những bức ảnh rực rỡ với ánh nắng vàng mùa thu, du khách nên chụp khoảng 9-10h. <br> <br>Du khách tới Hà Nội tháng 10 có cơ hội trải nghiệm nếp sống của người Hà Nội gần 100 năm trước ở nhà cổ 87 Mã Mây trong tour thực cảnh "Chuyện phố Hàng". Tour dài khoảng 45 phút, trình diễn vào cuối tuần. Trong tour, du khách được giới thiệu về nếp sống, hoạt động bán thuốc Đông y của người chủ, tham gia một số công đoạn như tán thuốc, vê thuốc, hơ ngải, xông hơi, thưởng thức món ăn dân dã. Sau khi có cái nhìn tổng quát về nghề thuốc Đông y, khách tham quan xem vở diễn "Chuyện phố Hàng" của các diễn viên Nhà hát Tuổi trẻ.' },
@@ -216,28 +248,82 @@ export default {
                 { id: 4, title: 'Phở bò vào danh sách 20 món soup ngon nhất thế giới', author: 'Anh Minh', date: 'November 24, 2024', content:'Phở bò được nhiều khách quốc tế biết đến nhất trong ẩm thực Việt Nam, nằm trong top 20 món soup ngon hàng đầu thế giới do CNN chọn.<br> <br> Theo nhà nghiên cứu ẩm thực Janet Clarkson, tác giả cuốn Soup: A Global History (Lịch sử toàn cầu của món súp), soup là một trong những loại thực phẩm lâu đời, phổ biến nhất thế giới. Mỗi quốc gia sẽ có các món soup riêng, nổi bật, được du khách quốc tế yêu thích.<br> <br> Dựa vào các nghiên cứu của Janet, CNN đã đề cử 20 món soup ngon nhất thế giới (xếp theo thứ tự bảng chữ cái) thay lời gợi ý dành cho du khách. Trong danh sách, định nghĩa về soup được mở rộng hơn, chỉ các món ăn có nước hoặc được hầm nhừ trong nước. Và nước dùng phải có hương vị thơm ngon, là một thành phần quan trọng quyết định độ ngon của món ăn. <br> <br> Phở bò Việt Nam có nước dùng được ninh trong nhiều giờ với quế, hồi, các loại gia vị có công dụng làm ấm cơ thể để tạo nên "hương thơm tuyệt vời" cho món ăn. Phở cũng là món ăn được nhiều khách quốc tế biết đến nhất trong nền ẩm thực Việt.<br> <br> Việt Nam có nhiều phiên bản phở như phở bò, gà, tim cật, sốt vang, xào lăn. Tuy nhiên, nguyên bản nhất và được nhiều người ưa chuộng nhất vẫn là phở bò tái. Ngày nay, phở bò cũng được các đầu bếp thêm vào nhiều loại topping hơn để thực khách lựa chọn như bò chín, gân, gàu. <br> <br> Món soup đầu tiên được nhắc đến là Banga, món hạt cọ hầm nổi tiếng của người Nigeria. Các nguyên liệu nấu cùng còn có cá hun khói, thảo mộc, các loại gia vị thơm hoặc thêm các loại thịt, hải sản. <br> <br> Các đại diện khác tại châu Á cũng có mặt trong danh sách này gồm mì bò Lan Châu Trung Quốc, mì gạo mohinga Myanmar, mì gà cay ăn cùng trứng luộc Indonesia, tom yum Thái Lan, mì ramen tonkatsu Nhật Bản.<br> <br> Danh sách top 20 các món soup ngon trên thế giới được cập nhật liên tục qua các năm, phần lớn các món ăn trong top không thay đổi theo năm tháng, cho thấy được phần nào sự yêu thích của du khách với các món ăn truyền thống của các quốc gia. Năm nay, top 20 được công bố lần đầu vào tháng 1 và cập nhật lại danh sách vào 17/11. '},
                 { id: 5, title: 'Kỹ thuật thở mặt trăng giúp dễ ngủ, sâu giấc', author: 'Thục Linh', date: 'November 24, 2024', content:'Kỹ thuật thở mặt trăng của Ấn Độ cổ đại được cho là phương pháp tự nhiên giúp giảm căng thẳng và dễ ngủ. <br><br> Theo thống kê, hơn một phần ba người trưởng thành toàn cầu không ngủ đủ 7 đến 8 tiếng mỗi đêm. Mất ngủ hoặc thiếu ngủ có thể gây ra tình trạng mệt mỏi, lờ đờ, uể oải vào ban ngày, ảnh hưởng đến chất lượng cuộc sống và công việc.<br> <br> Để cải thiện tình trạng này, tiến sĩ y tế Angie Tiwari, người sáng lập nền tảng yoga Unearthed, hướng dẫn kỹ thuật thở mặt trăng. Về cơ bản, thở mặt trăng là hít vào bằng mũi trái, đồng thời bịt mũi phải.<br> <br> Giống như các bài tập thở khác, thở mặt trăng tác động đến hệ thần kinh phó giao cảm, cơ quan điều hòa quá trình nghỉ ngơi và tiêu hóa. Kích hoạt hệ thần kinh này giúp cơ thể thư giãn, bởi nó làm giảm huyết áp và nhịp tim. Hoạt động của hệ thần kinh phó giao cảm cũng ức chế hệ thần kinh giao cảm, chịu trách nhiệm cho phản ứng chiến đấu hoặc bỏ chạy, từ đó tạo điều kiện cho giấc ngủ sâu. <br> <br> Trong tiếng Phạn, kỹ thuật này được gọi là chandra bhedana pranayama, hay "hơi thở xuyên trăng". Cái tên " thở mặt trăng" liên quan đến khái niệm năng lượng mặt trăng và mặt trời trong yoga.<br> <br> Angie Tiwar giải thích, phía bên trái cơ thể chứa năng lượng mặt trăng, còn phía bên phải là năng lượng mặt trời. Kết nối với bên phải mang lại năng lượng mạnh mẽ và phấn chấn, trong khi kết nối với bên trái giúp làm dịu và ổn định tinh thần.<br> <br> Quy luật thời gian trăng tròn cũng ảnh hưởng đến giấc ngủ. Tiến sĩ Elisabeth Philipps, chuyên gia dinh dưỡng từ Trung tâm Y tế Four-Five, cho biết trăng tròn làm giảm thời gian ngủ, ảnh hưởng giấc ngủ sâu và tăng thời gian cần thiết để một người chìm vào giấc ngủ.<br><br> Các nhà khoa học ở Thụy Sĩ phát hiện vào đêm trăng tròn, mọi người mất trung bình thêm 5 phút để thiếp đi. Nghiên cứu tương tự cũng cho thấy mọi người ngủ ít hơn trung bình 20 phút vào đêm trăng tròn. Ngoài ra, nồng độ melatonin, hormone giấc ngủ thiết yếu, ở cả nam và nữ đều thấp hơn vào những ngày trước và sau ngày rằm.<br> <br> Để có giấc ngủ ngon hơn, các chuyên gia khuyên mọi người sử dụng rèm chắn sáng, máy lọc không khí trong phòng ngủ, hạn chế thời gian sử dụng thiết bị điện tử và bổ sung magie glycinate. Các biện pháp khác bao gồm tập thể dục buổi tối và giữ chế độ ăn giàu trái cây, rau củ.'},
             ];
-
             // Tìm bài viết theo ID
-            const post = posts.find(post => post.id === parseInt(id));
+            const post = posts.find(p => p.id === parseInt(id));
             if (post) {
                 this.post = post;
+            } else {
+                console.error('Không tìm thấy bài viết với ID:', id);
             }
         },
+        // Hàm tải bình luận từ Local Storage
+        loadComments() {
+            const savedComments = localStorage.getItem('comments');
+            this.comments = savedComments ? JSON.parse(savedComments) : [];
+        },
+        // Hàm lưu bình luận vào Local Storage
+        saveComments() {
+            localStorage.setItem('comments', JSON.stringify(this.comments));
+        },
+        // Hàm thêm bình luận
         addComment() {
-            if (this.newComment.trim()) {
-                this.comments.push({
-                    user: 'Khách', // Tên mặc định
-                    text: this.newComment.trim(),
-                    date: new Date().toLocaleString('vi-VN') // Thời gian hiện tại
+            const username = localStorage.getItem('username'); // Lấy tên người dùng
+            if (!username) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Oops...",
+                    text: "Please log in to continue.",
+                    position: 'top',
+                    toast: true,
+                    showConfirmButton: false,
+                    timer: 3000,
+                    customClass: {
+                        popup: 'small-toast',
+                    }
                 });
-                this.newComment = ''; // Xóa nội dung bình luận sau khi gửi
+                return;
             }
+
+            if (!this.newComment.trim()) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Oops...",
+                    text: "Comment content cannot be empty!",
+                    position: 'top',
+                    toast: true,
+                    showConfirmButton: false,
+                    timer: 3000,
+                    customClass: {
+                        popup: 'small-toast',
+                    }
+                });
+                return;
+            }
+
+            // Tạo bình luận mới
+            const newComment = {
+                user: username,
+                text: this.newComment.trim(),
+                date: new Date().toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                })
+            };
+
+            // Thêm bình luận vào danh sách
+            this.comments.push(newComment);
+            this.newComment = ''; // Xóa nội dung input sau khi thêm bình luận
+
+            // Lưu lại danh sách bình luận vào Local Storage
+            this.saveComments();
         }
     }
 };
 </script>
 
 <style>
+
 body,
 html {
     height: 100%;
@@ -688,5 +774,38 @@ html {
     border: 0;
     border-top: 1px solid #ccc;
 }
+
+/* Cập nhật màu sắc và font chữ của tiêu đề */
+.popular .section-title {
+    font-size: 24px;  /* Thay đổi kích thước font chữ của tiêu đề section */
+    font-weight: bold;
+    color: #333;  /* Thay đổi màu chữ của tiêu đề */
+    margin-bottom: 20px;
+}
+
+/* Chỉnh sửa các bài viết trong Popular */
+.popular .post {
+    margin-bottom: 15px;  /* Tạo khoảng cách giữa các bài viết */
+}
+
+/* Cập nhật màu sắc và kích thước của tiêu đề bài viết */
+.popular .post .title h4 {
+    font-size: 14px;  /* Font chữ nhỏ lại */
+    color: #555;  /* Thay đổi màu chữ */
+    text-decoration: none;  /* Xóa gạch chân */
+    transition: color 0.3s ease;  /* Hiệu ứng khi hover */
+}
+
+/* Thay đổi màu chữ khi hover */
+.popular .post .title h4:hover {
+    color: #007BFF;  /* Màu chữ khi hover */
+}
+
+/* Giảm kích thước ảnh trong các bài viết */
+.popular .post img {
+    max-width: 100%;  /* Giới hạn kích thước ảnh để vừa với container */
+    height: auto;
+}
+
 
 </style>

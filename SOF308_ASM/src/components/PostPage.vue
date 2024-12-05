@@ -1,6 +1,6 @@
 <template>
     <!-- Menubar -->
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
         <img src="/src/assets/images/Bee Blog.png" alt="">
@@ -26,25 +26,31 @@
               <i class="fa-solid fa-upload" id="icons"></i>Post Articles
             </router-link>
           </li>
-          <li class="nav-item">
-            <router-link to="/edit-profile" class="nav-link">
-              <i class="fa-regular fa-id-card" id="icons"></i>Edit Profile
-            </router-link>
-          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Account
             </a>
             <ul class="dropdown-menu">
-              <router-link to="/login" class="dropdown-item">
-                <i class="fa-solid fa-user" id="icons"></i>Login
-              </router-link>
-              <li><router-link to="/forgot-password" class="dropdown-item">
-                <i class="fa-solid fa-question" id="icons"></i>Forgot Password
-                </router-link></li>
-              <li><router-link to="/edit-profile" class="dropdown-item">
-                <i class="fa-solid fa-user-pen" id="icons"></i>Change Password
-                </router-link></li>
+              <li>
+                <router-link v-if="!isLoggedIn" to="/login" class="dropdown-item">
+                  <i class="fa-solid fa-user" id="icons"></i> Login
+                </router-link>
+              </li>
+              <li v-if="isLoggedIn">
+                <router-link to="/forgot-password" class="dropdown-item">
+                  <i class="fa-solid fa-question" id="icons"></i> Forgot Password
+                </router-link>
+              </li>
+              <li v-if="isLoggedIn">
+                <router-link to="/edit-profile" class="dropdown-item">
+                  <i class="fa-solid fa-user-pen" id="icons"></i> Change Password
+                </router-link>
+              </li>
+              <li v-if="isLoggedIn">
+                <button @click="logout" class="dropdown-item">
+                  <i class="fa-solid fa-sign-out" id="icons"></i> Logout
+                </button>
+              </li>
             </ul>
           </li>
         </ul>
@@ -70,6 +76,12 @@
                 <input type="text" class="form-control" v-model="post.title" id="postTitle"
                     placeholder="Nhập tiêu đề bài viết hoặc video" required />
             </div>
+            <div class="mb-3">
+                <label for="postAuthor" class="form-label">Tác Giả</label>
+                <input type="text" class="form-control" v-model="post.author" id="postAuthor"
+                    placeholder="Nhập tên tác giả" required />
+            </div>
+
             <div class="mb-3">
                 <label for="postContent" class="form-label">Nội Dung</label>
                 <textarea class="form-control" v-model="post.content" id="postContent" rows="5"
@@ -99,6 +111,7 @@
                         <th>Nội Dung</th>
                         <th>Ngày Đăng</th>
                         <th>Hình Ảnh/Video</th>
+                        <th>Tác Giả</th> 
                         <th></th>
                         <th></th>
                     </tr>
@@ -114,6 +127,7 @@
                             <video v-if="item.file && item.fileType === 'video'" :src="item.file" controls
                                 style="max-width: 100px;"></video>
                         </td>
+                        <td>{{ item.author }}</td> 
                         <td>
                             <button class="btn btn-warning" @click="editPost(index)">Sửa</button>
                         </td>
@@ -122,6 +136,7 @@
                         </td>
                     </tr>
                 </tbody>
+
             </table>
         </div>
     </div>
@@ -131,7 +146,6 @@
             <div class="footer-section about">
                 <h1 class="logo-text"><span>Đức</span>Hiền</h1>
                 <p>
-                    Nội dung footer ở đây
                 </p>
                 <div class="contact">
                     <span><i class="fa-solid fa-phone-flip"></i> &nbsp;0812.529.537</span>
@@ -175,38 +189,59 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useRouter } from 'vue-router';
 
-// Dữ liệu bài viết ban đầu
+const router = useRouter();
+const isLoggedIn = ref(false);
+
+const userStatus = localStorage.getItem('isLoggedIn');
+isLoggedIn.value = userStatus === 'true';
+
+const logout = () => {
+  localStorage.clear();
+  isLoggedIn.value = false;
+  router.push('/login');
+  Swal.fire({
+    icon: 'success',
+    title: 'Logged Out',
+    text: 'You have successfully logged out!',
+    position: 'top',
+    toast: true,
+    showConfirmButton: false,
+    timer: 3000,
+    customClass: {
+    popup: 'small-toast',
+    },
+  });
+};
+
 const posts = ref([]);
-
-// Biến quản lý trạng thái form
 const post = ref({
     title: "",
     content: "",
     date: "",
     file: null,
     fileType: null,
+    author: "",  // Thêm trường tác giả
 });
 
 const isEditing = ref(false);
 const editingIndex = ref(null);
 
-// Xử lý nộp form
 function submitForm() {
     if (isEditing.value) {
-        // Cập nhật bài viết
         posts.value[editingIndex.value] = { ...post.value };
         isEditing.value = false;
         editingIndex.value = null;
     } else {
-        // Thêm bài viết mới
         posts.value.push({ ...post.value });
     }
+    // Lưu danh sách bài viết vào Local Storage
+    localStorage.setItem('posts', JSON.stringify(posts.value));
     resetForm();
 }
 
-// Xử lý khi chọn tệp
 function handleFileUpload(event) {
     const file = event.target.files[0];
     if (file) {
@@ -219,19 +254,18 @@ function handleFileUpload(event) {
     }
 }
 
-// Sửa bài viết
 function editPost(index) {
     post.value = { ...posts.value[index] };
     isEditing.value = true;
     editingIndex.value = index;
 }
 
-// Xóa bài viết
 function deletePost(index) {
     posts.value.splice(index, 1);
+    // Lưu lại danh sách bài viết sau khi xóa
+    localStorage.setItem('posts', JSON.stringify(posts.value));
 }
 
-// Reset form
 function resetForm() {
     post.value = {
         title: "",
@@ -239,16 +273,28 @@ function resetForm() {
         date: "",
         file: null,
         fileType: null,
+        author: "",  // Đặt lại tác giả
     };
 }
+
+// Tải bài viết từ Local Storage khi trang được tải
+onMounted(() => {
+    const savedPosts = localStorage.getItem('posts');
+    if (savedPosts) {
+        posts.value = JSON.parse(savedPosts);
+    }
+});
 </script>
+
+
+
 
 <style>
 #form-post {
-    border: 1px solid gray; /* Đường viền màu xanh lá */
-    border-radius: 10px; /* Bo góc viền */
-    padding: 20px; /* Khoảng cách bên trong form */
-    background-color: #f8f9fa; /* Màu nền nhạt */
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #f8f9fa;
 }
 
 
@@ -663,5 +709,4 @@ label {
 textarea {
     resize: none;
 }
-
 </style>

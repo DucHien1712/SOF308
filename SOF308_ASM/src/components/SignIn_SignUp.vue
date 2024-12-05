@@ -10,7 +10,7 @@
         <input type="password" placeholder="Confirm Password" v-model="signUpData.confirmPassword" />
         <span>or register with social platforms</span>
         <div class="sign-up-social-icons">
-          <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>
+          <a href="#" class="icon"><i class="fab fa-facebook-f"></i></a>
           <a href="#" class="icon"><i class="fa-brands fa-facebook"></i></a>
           <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
           <a href="#" class="icon"><i class="fa-brands fa-linkedin"></i></a>
@@ -28,12 +28,13 @@
         <a href="#">Forget Password?</a>
         <span>or login with social platforms</span>
         <div class="sign-up-social-icons">
-          <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-facebook"></i></a>
           <a href="#" class="icon"><i class="fa-brands fa-facebook"></i></a>
           <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
           <a href="#" class="icon"><i class="fa-brands fa-linkedin"></i></a>
         </div>
         <button class="btn">Sign in</button>
+        <RouterLink to="/" class="back"><h5>Back</h5></RouterLink>
       </form>
     </div>
 
@@ -60,7 +61,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-
+const isLoggedIn = ref(false);
 const isSignUp = ref(false);
 const signUpData = ref({
   username: '',
@@ -89,19 +90,21 @@ const checkAccountInLocalStorage = (username, password) => {
   return accounts.find(acc => acc.username === username && acc.password === password);
 };
 
-const encryptPassword = (password) => {
-  return btoa(password); // Mã hóa mật khẩu
-};
-
-const decryptPassword = (encryptedPassword) => {
-  return atob(encryptedPassword); // Giải mã mật khẩu
-};
-
-// Hàm xử lý đăng ký
 const signUp = () => {
   if (signUpData.value.username && signUpData.value.email && signUpData.value.password && signUpData.value.confirmPassword) {
     if (signUpData.value.password !== signUpData.value.confirmPassword) {
-      alert('Passwords do not match!');
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Passwords do not match!",
+        position: 'top',
+        toast: true,
+        showConfirmButton: false,
+        timer: 3000,
+        customClass: {
+          popup: 'small-toast',
+        }
+      });
       return;
     }
 
@@ -109,45 +112,111 @@ const signUp = () => {
     const isExistingUser = existingAccounts.some(acc => acc.username === signUpData.value.username);
 
     if (isExistingUser) {
-      alert('Username already exists! Please choose another username.');
+      Swal.fire({
+        icon: "warning",
+        title: "Oops...",
+        text: "Username already exists! Please choose another username.",
+        position: 'top',
+        toast: true,
+        showConfirmButton: false,
+        timer: 3000,
+        customClass: {
+          popup: 'small-toast',
+        }
+      });
       return;
     }
 
     saveAccountToLocalStorage({
       username: signUpData.value.username,
       email: signUpData.value.email,
-      password: encryptPassword(signUpData.value.password)
+      password: signUpData.value.password
     });
 
-    alert(`Welcome, ${signUpData.value.username}! Your account has been created.`);
+    Swal.fire({
+      icon: "success",
+      title: `Welcome, ${signUpData.value.username}!`,
+      text: "Your account has been created.",
+      position: 'top',
+      toast: true,
+      showConfirmButton: false,
+      timer: 3000,
+      customClass: {
+        popup: 'small-toast',
+      }
+    });
+
     signUpData.value.password = '';
     signUpData.value.confirmPassword = '';
     isSignUp.value = false;
   } else {
-    alert('Please fill in all fields!');
+    Swal.fire({
+      icon: "warning",
+      title: "Oops...",
+      text: "Please fill in all fields!",
+      position: 'top',
+      toast: true,
+      showConfirmButton: false,
+      timer: 3000,
+      customClass: {
+        popup: 'small-toast',
+      }
+    });
   }
 };
 
-// Hàm xử lý đăng nhập
 const signIn = () => {
   if (signInData.value.username && signInData.value.password) {
     const account = checkAccountInLocalStorage(signInData.value.username, signInData.value.password);
     if (account) {
-      alert(`Hello again, ${signInData.value.username}!`);
+      Swal.fire({
+        icon: "success",
+        title: `Hello again, ${signInData.value.username}!`,
+        text: "Your account has been created.",
+        position: 'top',
+        toast: true,
+        showConfirmButton: false,
+        timer: 3000,
+        customClass: {
+          popup: 'small-toast',
+        }
+      });
+      localStorage.setItem('username', signInData.value.username);
+      localStorage.setItem('isLoggedIn', 'true');
+      isLoggedIn.value = true;
       router.push('/');
     } else {
-      alert('Account does not exist. Please sign up first.');
+      Swal.fire({
+        icon: "warning",
+        title: "Oops...",
+        text: "Account does not exist. Please sign up first.",
+        footer: '<a href="#">Why do I have this issue?</a>',
+        position: 'top', 
+        toast: true, 
+        showConfirmButton: false, 
+        timer: 3000, 
+        customClass: {
+          popup: 'small-toast',
+        }
+      });
       isSignUp.value = true;
     }
   } else {
-    alert('Please enter your username and password!');
+    Swal.fire({
+      icon: "warning",
+      title: "Oops...",
+      text: "Please enter your username and password!",
+      position: 'top',
+      toast: true,
+      showConfirmButton: false,
+      timer: 3000,
+      customClass: {
+        popup: 'small-toast',
+      }
+    });
   }
 };
 </script>
-
-
-
-
 
 <style scoped>
 * {
@@ -176,6 +245,8 @@ body {
   width: 768px;
   max-width: 100%;
   min-height: 480px;
+  margin: 0 auto;
+  margin-top: 150px;
 }
 
 .sign-up-container p {
@@ -453,5 +524,44 @@ body {
 .sign-up-social-icons a:nth-child(4):hover {
   /* Thêm prefix */
   background-color: #0077b5;
+}
+
+/* CSS cho thông báo nhỏ */
+.small-toast {
+  font-size: 14px !important;
+  /* Chỉnh kích thước font */
+  padding: 10px 20px !important;
+  /* Chỉnh padding cho thông báo */
+  border-radius: 5px;
+  /* Đặt bo góc */
+}
+
+/* Điều chỉnh vị trí thông báo */
+.swal2-container {
+  top: 10px !important;
+  /* Đặt vị trí thông báo ở phía trên */
+  left: 50% !important;
+  /* Canh giữa */
+  transform: translateX(-50%) !important;
+  /* Canh giữa theo chiều ngang */
+}
+
+/* Điều chỉnh màu sắc nền thông báo (tuỳ chỉnh) */
+.swal2-popup {
+  background-color: #333 !important;
+  color: #fff !important;
+}
+
+.back h5 {
+  font-size: 15px;
+  color: #333; /* Màu chữ */
+  text-decoration: none; /* Bỏ gạch chân */
+  font-weight: normal; /* Kiểu chữ bình thường */
+  transition: color 0.3s ease; /* Hiệu ứng chuyển màu mượt mà */
+}
+
+.back h5:hover {
+    color: #0056b3; /* Màu chữ khi hover */
+    text-decoration: underline; /* Gạch chân khi hover */
 }
 </style>
