@@ -226,18 +226,17 @@ const logout = () => {
 export default {
     data() {
         return {
-            post: {}, // Dữ liệu bài viết
-            comments: [], // Danh sách bình luận
-            newComment: '' // Nội dung bình luận mới
+            post: {}, 
+            comments: [], 
+            newComment: '' 
         };
     },
     created() {
-        // Lấy ID từ URL
         const postId = this.$route.params.id;
-        this.fetchPostDetails(postId); // Lấy chi tiết bài viết theo ID
+        this.fetchPostDetails(postId); 
     },
     mounted() {
-        this.loadComments(); // Tải bình luận từ Local Storage khi trang được tải
+        this.loadComments();
     },
     methods: {
         fetchPostDetails(id) {
@@ -248,7 +247,7 @@ export default {
                 { id: 4, title: 'Phở bò vào danh sách 20 món soup ngon nhất thế giới', author: 'Anh Minh', date: 'November 24, 2024', content:'Phở bò được nhiều khách quốc tế biết đến nhất trong ẩm thực Việt Nam, nằm trong top 20 món soup ngon hàng đầu thế giới do CNN chọn.<br> <br> Theo nhà nghiên cứu ẩm thực Janet Clarkson, tác giả cuốn Soup: A Global History (Lịch sử toàn cầu của món súp), soup là một trong những loại thực phẩm lâu đời, phổ biến nhất thế giới. Mỗi quốc gia sẽ có các món soup riêng, nổi bật, được du khách quốc tế yêu thích.<br> <br> Dựa vào các nghiên cứu của Janet, CNN đã đề cử 20 món soup ngon nhất thế giới (xếp theo thứ tự bảng chữ cái) thay lời gợi ý dành cho du khách. Trong danh sách, định nghĩa về soup được mở rộng hơn, chỉ các món ăn có nước hoặc được hầm nhừ trong nước. Và nước dùng phải có hương vị thơm ngon, là một thành phần quan trọng quyết định độ ngon của món ăn. <br> <br> Phở bò Việt Nam có nước dùng được ninh trong nhiều giờ với quế, hồi, các loại gia vị có công dụng làm ấm cơ thể để tạo nên "hương thơm tuyệt vời" cho món ăn. Phở cũng là món ăn được nhiều khách quốc tế biết đến nhất trong nền ẩm thực Việt.<br> <br> Việt Nam có nhiều phiên bản phở như phở bò, gà, tim cật, sốt vang, xào lăn. Tuy nhiên, nguyên bản nhất và được nhiều người ưa chuộng nhất vẫn là phở bò tái. Ngày nay, phở bò cũng được các đầu bếp thêm vào nhiều loại topping hơn để thực khách lựa chọn như bò chín, gân, gàu. <br> <br> Món soup đầu tiên được nhắc đến là Banga, món hạt cọ hầm nổi tiếng của người Nigeria. Các nguyên liệu nấu cùng còn có cá hun khói, thảo mộc, các loại gia vị thơm hoặc thêm các loại thịt, hải sản. <br> <br> Các đại diện khác tại châu Á cũng có mặt trong danh sách này gồm mì bò Lan Châu Trung Quốc, mì gạo mohinga Myanmar, mì gà cay ăn cùng trứng luộc Indonesia, tom yum Thái Lan, mì ramen tonkatsu Nhật Bản.<br> <br> Danh sách top 20 các món soup ngon trên thế giới được cập nhật liên tục qua các năm, phần lớn các món ăn trong top không thay đổi theo năm tháng, cho thấy được phần nào sự yêu thích của du khách với các món ăn truyền thống của các quốc gia. Năm nay, top 20 được công bố lần đầu vào tháng 1 và cập nhật lại danh sách vào 17/11. '},
                 { id: 5, title: 'Kỹ thuật thở mặt trăng giúp dễ ngủ, sâu giấc', author: 'Thục Linh', date: 'November 24, 2024', content:'Kỹ thuật thở mặt trăng của Ấn Độ cổ đại được cho là phương pháp tự nhiên giúp giảm căng thẳng và dễ ngủ. <br><br> Theo thống kê, hơn một phần ba người trưởng thành toàn cầu không ngủ đủ 7 đến 8 tiếng mỗi đêm. Mất ngủ hoặc thiếu ngủ có thể gây ra tình trạng mệt mỏi, lờ đờ, uể oải vào ban ngày, ảnh hưởng đến chất lượng cuộc sống và công việc.<br> <br> Để cải thiện tình trạng này, tiến sĩ y tế Angie Tiwari, người sáng lập nền tảng yoga Unearthed, hướng dẫn kỹ thuật thở mặt trăng. Về cơ bản, thở mặt trăng là hít vào bằng mũi trái, đồng thời bịt mũi phải.<br> <br> Giống như các bài tập thở khác, thở mặt trăng tác động đến hệ thần kinh phó giao cảm, cơ quan điều hòa quá trình nghỉ ngơi và tiêu hóa. Kích hoạt hệ thần kinh này giúp cơ thể thư giãn, bởi nó làm giảm huyết áp và nhịp tim. Hoạt động của hệ thần kinh phó giao cảm cũng ức chế hệ thần kinh giao cảm, chịu trách nhiệm cho phản ứng chiến đấu hoặc bỏ chạy, từ đó tạo điều kiện cho giấc ngủ sâu. <br> <br> Trong tiếng Phạn, kỹ thuật này được gọi là chandra bhedana pranayama, hay "hơi thở xuyên trăng". Cái tên " thở mặt trăng" liên quan đến khái niệm năng lượng mặt trăng và mặt trời trong yoga.<br> <br> Angie Tiwar giải thích, phía bên trái cơ thể chứa năng lượng mặt trăng, còn phía bên phải là năng lượng mặt trời. Kết nối với bên phải mang lại năng lượng mạnh mẽ và phấn chấn, trong khi kết nối với bên trái giúp làm dịu và ổn định tinh thần.<br> <br> Quy luật thời gian trăng tròn cũng ảnh hưởng đến giấc ngủ. Tiến sĩ Elisabeth Philipps, chuyên gia dinh dưỡng từ Trung tâm Y tế Four-Five, cho biết trăng tròn làm giảm thời gian ngủ, ảnh hưởng giấc ngủ sâu và tăng thời gian cần thiết để một người chìm vào giấc ngủ.<br><br> Các nhà khoa học ở Thụy Sĩ phát hiện vào đêm trăng tròn, mọi người mất trung bình thêm 5 phút để thiếp đi. Nghiên cứu tương tự cũng cho thấy mọi người ngủ ít hơn trung bình 20 phút vào đêm trăng tròn. Ngoài ra, nồng độ melatonin, hormone giấc ngủ thiết yếu, ở cả nam và nữ đều thấp hơn vào những ngày trước và sau ngày rằm.<br> <br> Để có giấc ngủ ngon hơn, các chuyên gia khuyên mọi người sử dụng rèm chắn sáng, máy lọc không khí trong phòng ngủ, hạn chế thời gian sử dụng thiết bị điện tử và bổ sung magie glycinate. Các biện pháp khác bao gồm tập thể dục buổi tối và giữ chế độ ăn giàu trái cây, rau củ.'},
             ];
-            // Tìm bài viết theo ID
+            
             const post = posts.find(p => p.id === parseInt(id));
             if (post) {
                 this.post = post;
@@ -256,18 +255,15 @@ export default {
                 console.error('Không tìm thấy bài viết với ID:', id);
             }
         },
-        // Hàm tải bình luận từ Local Storage
         loadComments() {
             const savedComments = localStorage.getItem('comments');
             this.comments = savedComments ? JSON.parse(savedComments) : [];
         },
-        // Hàm lưu bình luận vào Local Storage
         saveComments() {
             localStorage.setItem('comments', JSON.stringify(this.comments));
         },
-        // Hàm thêm bình luận
         addComment() {
-            const username = localStorage.getItem('username'); // Lấy tên người dùng
+            const username = localStorage.getItem('username');
             if (!username) {
                 Swal.fire({
                     icon: "warning",
@@ -300,7 +296,6 @@ export default {
                 return;
             }
 
-            // Tạo bình luận mới
             const newComment = {
                 user: username,
                 text: this.newComment.trim(),
@@ -311,11 +306,8 @@ export default {
                 })
             };
 
-            // Thêm bình luận vào danh sách
             this.comments.push(newComment);
-            this.newComment = ''; // Xóa nội dung input sau khi thêm bình luận
-
-            // Lưu lại danh sách bình luận vào Local Storage
+            this.newComment = ''; 
             this.saveComments();
         }
     }
